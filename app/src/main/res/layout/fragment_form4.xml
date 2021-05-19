@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragments.formFragment4">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp">
+
+            <ImageButton
+                android:id="@+id/retour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_back"
+                android:background="@android:color/transparent"
+                app:tint="@color/dark_grey"/>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="@string/ajouter_une_voiture"
+                android:textAlignment="textStart"
+                android:textSize="20sp"
+                android:layout_marginTop="30dp"
+                android:textColor="@color/black"
+                />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="50dp"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="0dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/expanded_cardView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginHorizontal="10dp">
+
+                        <RelativeLayout
+                            android:id="@+id/bloc1"
+                            android:layout_width="173dp"
+                            android:layout_height="56dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/relativeLayout"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:id="@+id/key_matricule"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_marginTop="3dp"
+                                android:fontFamily="@font/montserrat_semibold"
+                                android:text="matricule"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/value_matricule"
+                                android:layout_width="92dp"
+                                android:layout_height="wrap_content"
+                                android:layout_alignBaseline="@+id/key_matricule"
+                                android:layout_alignStart="@+id/value_code_secret"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginStart="0dp"
+                                android:layout_marginTop="3dp"
+                                android:layout_marginEnd="0dp"
+                                android:fontFamily="@font/montserrat_medium"
+                                android:text="00513 111 39"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/key_code_secret"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/key_matricule"
+                                android:layout_marginTop="12dp"
+                                android:fontFamily="@font/montserrat_semibold"
+                                android:text="code secret"
+                                android:textAlignment="center"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/value_code_secret"
+                                android:layout_width="92dp"
+                                android:layout_height="wrap_content"
+                                android:layout_alignBaseline="@+id/key_code_secret"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginStart="7dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginEnd="0dp"
+                                android:layout_toEndOf="@+id/key_code_secret"
+                                android:fontFamily="@font/montserrat_medium"
+                                android:text="Hy_9T@Ou"
+                                android:textAlignment="viewStart"
+                                android:textSize="12sp" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/relativeLayout"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:id="@+id/car_illustration"
+                                android:layout_width="70dp"
+                                android:layout_height="50dp"
+                                android:layout_centerHorizontal="true"
+                                android:contentDescription="car illustration"
+                                android:src="@drawable/car" />
+
+
+                            <TextView
+                                android:id="@+id/key_num_tele"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/car_illustration"
+                                android:fontFamily="@font/montserrat_semibold"
+                                android:text="numéro de téléphone"
+                                android:textAlignment="center"
+                                android:textSize="11sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/value_num_tele"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/key_num_tele"
+                                android:fontFamily="@font/montserrat_medium"
+                                android:text="056 83 23 17"
+                                android:textAlignment="center"
+                                android:textColor="@color/medium_grey"
+                                android:textSize="20sp" />
+                        </RelativeLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="40dp">
+
+
+            <Button
+                android:id="@+id/annuler"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginEnd="40dp"
+                android:backgroundTint="@android:color/transparent"
+                android:textSize="10sp"
+                android:text="@string/annuler"
+                android:textColor="@color/violet"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:strokeColor="@color/violet"
+                app:strokeWidth="1dp"
+                style="?attr/materialButtonOutlinedStyle"
+                app:cornerRadius="6dp"
+                />
+
+
+            <Button
+                android:id="@+id/confirmer"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="40dp"
+                android:backgroundTint="@color/violet"
+                android:text="@string/confirmer"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/annuler"
+                app:cornerRadius="6dp"/>
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
