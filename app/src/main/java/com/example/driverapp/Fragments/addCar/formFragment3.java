@@ -1,4 +1,4 @@
-package com.example.driverapp.Fragments;
+package com.example.driverapp.Fragments.addCar;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,9 @@ import android.widget.ImageButton;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.driverapp.Fragments.addCar.formFragment;
 import com.example.driverapp.R;
+import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,8 +23,9 @@ public class formFragment3 extends Fragment {
     private Button button_suivant;
     private ImageButton button_retour ;
     private formFragment bottomSheetFragment;
-
-
+    TextInputEditText edtMarque;
+    TextInputEditText edtModel;
+    TextInputEditText edtMatricul;
 
     public formFragment3() {
         // Required empty public constructor
@@ -43,6 +46,10 @@ public class formFragment3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_form3, container, false);
+
+        edtMarque = v.findViewById(R.id.edtMarque);
+        edtModel = v.findViewById(R.id.edtModel);
+        edtMatricul = v.findViewById(R.id.edtMatricule);
 
         annulerButton(v);
         suivantButton(v);
@@ -76,6 +83,9 @@ public class formFragment3 extends Fragment {
             @Override
             public void onClick(View v) {
 
+                bottomSheetFragment.setMarque(edtMarque.getText().toString());
+                bottomSheetFragment.setModel(edtModel.getText().toString());
+                bottomSheetFragment.setMatricul(edtMatricul.getText().toString());
                 bottomSheetFragment.setFragment4();
 
 

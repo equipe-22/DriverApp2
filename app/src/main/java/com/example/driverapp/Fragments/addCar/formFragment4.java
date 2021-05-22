@@ -1,4 +1,4 @@
-package com.example.driverapp.Fragments;
+package com.example.driverapp.Fragments.addCar;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,9 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.driverapp.Fragments.addCar.formFragment;
+import com.example.driverapp.Models.Car;
+import com.example.driverapp.Models.CarViewModel;
 import com.example.driverapp.R;
 
 /**
@@ -21,6 +26,11 @@ public class formFragment4 extends Fragment {
     private Button button_confirmer;
     private ImageButton button_retour ;
     private formFragment bottomSheetFragment;
+
+    private TextView txtMarque;
+    private TextView txtCode;
+    private TextView txtMatricul;
+    private TextView txtNum;
 
 
     public formFragment4() {
@@ -45,6 +55,13 @@ public class formFragment4 extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_form4, container, false);
 
+        txtCode = v.findViewById(R.id.value_code_secret);
+        txtMatricul = v.findViewById(R.id.value_matricule);
+        txtNum = v.findViewById(R.id.value_num_tele);
+
+        txtCode.setText(bottomSheetFragment.getCodeSecret());
+        txtMatricul.setText(bottomSheetFragment.getMatricul());
+        txtNum.setText(bottomSheetFragment.getPhoneNumber());
         annulerButton(v);
         confirmerButton(v);
         retourButton(v);
@@ -73,7 +90,11 @@ public class formFragment4 extends Fragment {
         button_confirmer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                CarViewModel carViewModel = new ViewModelProvider(getActivity(), ViewModelProvider
+                        .AndroidViewModelFactory.getInstance(getActivity().getApplication()))
+                        .get(CarViewModel.class);
+                carViewModel.insert(new Car(bottomSheetFragment.getMarque(), bottomSheetFragment.getModel(), bottomSheetFragment.getMatricul(),
+                        bottomSheetFragment.getCodeSecret(), bottomSheetFragment.getPhoneNumber()));
                 bottomSheetFragment.dismiss();
 
             }

@@ -1,4 +1,4 @@
-package com.example.driverapp.Fragments;
+package com.example.driverapp.Fragments.addCar;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.driverapp.Fragments.addCar.formFragment;
 import com.example.driverapp.R;
 import com.hbb20.CountryCodePicker;
 
@@ -61,9 +62,17 @@ public class formFragment1 extends Fragment {
         getPhoneNumberEdit();
         ccp.registerCarrierNumberEditText(phone);
         ccp.setCountryForNameCode("DZ");
-        annulerButton(thisFragment);
-        suivantButton(thisFragment);
-        retourButton(thisFragment);
+
+        button_suivant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                bottomSheetFragment.setPhoneNumber(phone.getText().toString());
+                bottomSheetFragment.setFragment2();
+
+
+            }
+        });
         return thisFragment;
     }
 
@@ -83,22 +92,26 @@ public class formFragment1 extends Fragment {
     }
 
 
-    public void suivantButton (View v){
-
-        button_suivant = v.findViewById(R.id.suivant);
+    /*public void suivantButton (View v){
 
         button_suivant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO
+                // navigate to formFragment2
+                formFragment1Directions.ActionFormFragment1ToFormFragment2 action = formFragment1Directions.actionFormFragment1ToFormFragment2();
+                Navigation.findNavController(requireActivity(), R.id.fragmentContainer)
+                        .navigate(action);
+
                 bottomSheetFragment.setFragment2();
+
             }
         });
 
 
-    }
+    }*/
     public void retourButton (View v) {
 
-        button_retour = (ImageButton) v.findViewById(R.id.retour);
         button_retour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,6 +135,7 @@ public class formFragment1 extends Fragment {
                         phoneErrors.setText("This phone number is valid in "+ ccp.getSelectedCountryName());
                     }else {
                         if(phone.getText().toString().length()>0){
+                            button_suivant.setEnabled(false);
                             phoneErrors.setTextColor(Color.RED);
                             phoneErrors.setText("This phone number is not valid in "+ ccp.getSelectedCountryName());
                         }
@@ -137,6 +151,8 @@ public class formFragment1 extends Fragment {
         }
     }
     private void assignViews(View v){
+        button_retour = (ImageButton) v.findViewById(R.id.retour);
+        button_suivant = v.findViewById(R.id.suivant);
         phone=(EditText) v.findViewById(R.id.phone);
         ccp=(CountryCodePicker) v.findViewById(R.id.ccp);
         phoneErrors = (TextView) v.findViewById(R.id.phoneErrors);

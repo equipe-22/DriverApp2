@@ -21,21 +21,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.driverapp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
-    List<Car> carList;
-    Context context;
 
-    public RecyclerViewAdapter(List<Car> carList, Context context) {
-        this.carList = carList;
-        this.context = context;
-    }
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
+    List<Car> carList = new ArrayList<Car>();
+    Context context;
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.one_list_item,parent,false);
+        context = view.getContext();
         MyViewHolder holder = new MyViewHolder(view);
         return holder;
     }
@@ -57,6 +55,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.letter.setText(String.valueOf(carList.get(position).getModele().charAt(0)));
         Resources res = context.getResources();
         Drawable myImage = ResourcesCompat.getDrawable(res, R.drawable.car, null);
+    }
+
+    public void setCars (List<Car> cars){
+        carList = cars;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -122,5 +125,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 }
             });
         }
+
+
     }
+
+
 }
