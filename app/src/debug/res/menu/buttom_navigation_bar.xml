@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     android:fontFamily="@font/montserrat_bold">
 <item
-    android:id="@+id/homeIcon"
+    android:id="@+id/homeButton"
     android:icon="@drawable/nav_home_state"
     android:title="HOME"
     android:fontFamily="@font/montserrat_bold"
@@ -12,7 +12,7 @@
         android:id="@+id/placeHolder"
         android:title=""/>
     <item
-        android:id="@+id/locationIcon"
+        android:id="@+id/mapButton"
         android:icon="@drawable/nav_map_state"
         android:title="MAP"
         android:fontFamily="@font/montserrat_bold"
