@@ -65,6 +65,7 @@ public class QrCodeFragment extends DialogFragment {
         mCodeScanner.releaseResources();
         super.onPause();
     }
+
     private void sendData(String carDataStr) {
         String[] data = carDataStr.split(" ");
         for (int i=0; i<data.length; i++){

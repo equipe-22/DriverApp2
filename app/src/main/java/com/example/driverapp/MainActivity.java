@@ -31,6 +31,8 @@ import com.example.driverapp.Fragments.MapFragment;
 import com.example.driverapp.Fragments.SearchFragment;
 import com.example.driverapp.Fragments.formFragment;
 import com.example.driverapp.Models.Car;
+import com.example.driverapp.Models.CarDao;
+import com.example.driverapp.Models.CarViewModel;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     AppBarLayout appBar;
 
 
+
     List<Car> carList = new ArrayList<Car>();
 
     public void appendCarList(Car car) {
@@ -65,10 +68,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 //        ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS}, PackageManager.PERMISSION_GRANTED);
 //        ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, PackageManager.PERMISSION_GRANTED);
 //        Car car = new Car("kia","cerato","098259","iiRR55~~","088475899");
 //        carList.add(car);
+//        CarViewModel cars = new CarViewModel(getApplication());
+//        Car car = new Car("Lamborgini","Veneno","40404040","33@@rrTT","+213793777738");
+//        cars.insert(car);
+//        carList = cars.getCarList();
+
         setHomeFragment(carList);
         fabClick();
         btmNavViewClicks();
