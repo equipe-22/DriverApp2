@@ -1,4 +1,4 @@
-package com.example.driverapp.Fragments;
+package com.example.driverapp.Fragments.addCar;
 
 import android.app.Dialog;
 import android.content.res.Resources;
@@ -66,7 +66,7 @@ public class formFragment extends BottomSheetDialogFragment implements Parcelabl
     }
 
     public void setFragment1 (){
-        fragment = new com.example.driverapp.Fragments.formFragment1();
+        fragment = new formFragment1();
         getChildFragmentManager().beginTransaction().setCustomAnimations(
                 R.anim.slide_in,  // enter
                 R.anim.fade_out,  // exit
@@ -81,7 +81,7 @@ public class formFragment extends BottomSheetDialogFragment implements Parcelabl
     }
 
     public void setFragment2 (){
-        fragment = new com.example.driverapp.Fragments.formFragment2();
+        fragment = new formFragment2();
         getChildFragmentManager().beginTransaction().setCustomAnimations(
                 R.anim.slide_in,  // enter
                 R.anim.fade_out,  // exit
@@ -96,7 +96,7 @@ public class formFragment extends BottomSheetDialogFragment implements Parcelabl
     }
 
     public void setFragment3 (){
-        fragment = new com.example.driverapp.Fragments.formFragment3();
+        fragment = new formFragment3();
         getChildFragmentManager().beginTransaction().setCustomAnimations(
                 R.anim.slide_in,  // enter
                 R.anim.fade_out,  // exit
@@ -111,7 +111,7 @@ public class formFragment extends BottomSheetDialogFragment implements Parcelabl
     }
 
     public void setFragment4 (){
-        fragment = new com.example.driverapp.Fragments.formFragment4();
+        fragment = new formFragment4();
         getChildFragmentManager().beginTransaction().setCustomAnimations(
                 R.anim.slide_in,  // enter
                 R.anim.fade_out,  // exit

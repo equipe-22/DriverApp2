@@ -1,4 +1,4 @@
-package com.example.driverapp.Fragments;
+package com.example.driverapp.Fragments.addCar;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,29 +7,29 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.driverapp.R;
 
 /**
  * A simple {@link Fragment} subclass.
+
  */
-public class formFragment3 extends Fragment {
+public class formFragment4 extends Fragment {
 
     private Button button_annuler ;
-    private Button button_suivant;
+    private Button button_confirmer;
     private ImageButton button_retour ;
     private formFragment bottomSheetFragment;
 
 
-
-    public formFragment3() {
+    public formFragment4() {
         // Required empty public constructor
     }
 
+
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Recuperer l'objet de bottomSheetFragment pour pouvoir utiliser le bouton annuler.
@@ -37,21 +37,21 @@ public class formFragment3 extends Fragment {
         if (bundle != null) {
             bottomSheetFragment = bundle.getParcelable("this"); // Key
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_form3, container, false);
+        View v = inflater.inflate(R.layout.fragment_form4, container, false);
 
         annulerButton(v);
-        suivantButton(v);
+        confirmerButton(v);
         retourButton(v);
+
 
         return v;
     }
-
-
 
 
     public void annulerButton (View v) {
@@ -67,17 +67,14 @@ public class formFragment3 extends Fragment {
         });
     }
 
+    public void confirmerButton (View v) {
+        button_confirmer = v.findViewById(R.id.confirmer);
 
-    public void suivantButton (View v) {
-
-        button_suivant = v.findViewById(R.id.suivant);
-
-        button_suivant.setOnClickListener(new View.OnClickListener() {
+        button_confirmer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                bottomSheetFragment.setFragment4();
-
+                bottomSheetFragment.dismiss();
 
             }
         });
@@ -91,10 +88,11 @@ public class formFragment3 extends Fragment {
             @Override
             public void onClick(View v) {
 
-                bottomSheetFragment.setFragment2();
+                bottomSheetFragment.setFragment3();
 
 
             }
         });
     }
+
 }

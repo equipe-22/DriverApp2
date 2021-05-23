@@ -1,4 +1,4 @@
-package com.example.driverapp.Fragments;
+package com.example.driverapp.Fragments.addCar;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -21,7 +21,7 @@ public class formFragment0 extends Fragment {
 
     private Button btnFillManually;
     private Button btnScanQR;
-    private com.example.driverapp.Fragments.formFragment bottomSheetFragment;
+    private formFragment bottomSheetFragment;
 
     public formFragment0() {
         // Required empty public constructor

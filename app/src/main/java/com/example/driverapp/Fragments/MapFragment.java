@@ -75,12 +75,14 @@ public class MapFragment extends Fragment {
 
         }
     };
+
     private GoogleMap.OnMapClickListener mapClickListener = new GoogleMap.OnMapClickListener() {
         @Override
         public void onMapClick(@NonNull @NotNull LatLng latLng) {
 
         }
     };
+
     private GoogleMap.OnMarkerClickListener markerClickListener = new GoogleMap.OnMarkerClickListener() {
         @Override
         public boolean onMarkerClick(@NonNull @NotNull Marker marker) {
