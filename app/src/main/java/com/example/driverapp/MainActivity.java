@@ -3,17 +3,18 @@ package com.example.driverapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -21,22 +22,22 @@ import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.driverapp.Fragments.CarDetailsFragment;
 import com.example.driverapp.Fragments.EmptyStateFragment;
 import com.example.driverapp.Fragments.ListFragment;
 import com.example.driverapp.Fragments.MapFragment;
 import com.example.driverapp.Fragments.SearchFragment;
-import com.example.driverapp.Fragments.addCar.formFragment;
-import com.example.driverapp.Fragments.addCar.formFragment0;
+import com.example.driverapp.Fragments.formFragment;
 import com.example.driverapp.Models.Car;
+import com.example.driverapp.Models.CarDao;
+import com.example.driverapp.Models.CarViewModel;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationBarView;
 
-import org.jetbrains.annotations.NotNull;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView btmNavView;
     FloatingActionButton fab;
 
-    Boolean isInHome=true;
+    Boolean isInHome;
     Boolean carDetailsShowed;
     ImageButton profil;
     ImageButton settings;
@@ -54,247 +55,211 @@ public class MainActivity extends AppCompatActivity {
     ImageButton logout;
     AppBarLayout appBar;
 
-    NavController navController;
 
 
+    List<Car> carList = new ArrayList<Car>();
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        btmNavView = findViewById(R.id.bottomNavigationView);
-
-        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupWithNavController(btmNavView, navController);
-
-        return navController.navigateUp();
+    public void appendCarList(Car car) {
+        this.carList.add(car);
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+//        ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS}, PackageManager.PERMISSION_GRANTED);
+//        ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, PackageManager.PERMISSION_GRANTED);
+//        Car car = new Car("kia","cerato","098259","iiRR55~~","088475899");
+//        carList.add(car);
+//        CarViewModel cars = new CarViewModel(getApplication());
+//        Car car = new Car("Lamborgini","Veneno","40404040","33@@rrTT","+213793777738");
+//        cars.insert(car);
+//        carList = cars.getCarList();
 
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.homeButton:
-                        navController.navigate(R.id.listFragment);
-                        return true;
-                    case R.id.mapButton:
-                        navController.navigate(R.id.mapFragment);
-                        return true;
-                    default:
-                        return false;
-
-                }
-
-            }
-        });
-        NavController navController = NavHostFragment.findNavController(getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment));
-        NavigationUI.setupWithNavController(bottomNavigationView, navController);
-
-        fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                formFragment bottomSheetFragment = new formFragment();
-                bottomSheetFragment.show( getSupportFragmentManager(), bottomSheetFragment.getTag());
-            }
-        });
-
-
-        //carList.add(new Car("Opel", "Astra", "1324253462", "HHd3f<>4", "012345436"));
-        //setHomeFragment(carList);
+        setHomeFragment(carList);
+        fabClick();
         btmNavViewClicks();
         searchBtnClick();
         cancelSearchClick();
         profilAnim();
-
-
-
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.receiveData();
+    }
 
-
-
-
-        @Override
-        protected void onResume() {
-            super.onResume();
-            this.receiveData();
+    //setting main fragments
+    public void setHomeFragment(List<Car> carList) {
+        FragmentTransaction fragmentsTransaction = getSupportFragmentManager().beginTransaction().setReorderingAllowed(true);
+        if (carList.size() > 0) {
+            Fragment fragment = new ListFragment(carList);
+            fragmentsTransaction.replace(R.id.fragmentContainer, fragment).commit();
+        }else {
+            Fragment fragment = new EmptyStateFragment();
+            fragmentsTransaction.replace(R.id.fragmentContainer,fragment).commit();
         }
+        isInHome = true;
+        appBar = (AppBarLayout) findViewById(R.id.appBar);
+        appBar.setVisibility(View.VISIBLE);
 
+    }
+    public void setMapFragment(){
+        FragmentTransaction fragmentsTransaction = getSupportFragmentManager().beginTransaction().setReorderingAllowed(true);
+        fragmentsTransaction.replace(R.id.fragmentContainer, mapFragment, "map").addToBackStack("map").commit();
+        showCarDetails();
+        isInHome = false;
+        appBar = (AppBarLayout) findViewById(R.id.appBar);
+        appBar.setVisibility(View.INVISIBLE);
+    }
 
-        //setting main fragments
-        public void setHomeFragment(List<Car> carList) {
-            FragmentTransaction fragmentsTransaction = getSupportFragmentManager().beginTransaction().setReorderingAllowed(true);
-            if (carList.size() > 0) {
-                Fragment fragment = new ListFragment();
-                fragmentsTransaction.replace(R.id.nav_host_fragment, fragment).commit();
-            }else {
-                Fragment fragment = new EmptyStateFragment();
-                fragmentsTransaction.replace(R.id.nav_host_fragment,fragment).commit();
-            }
-            isInHome = true;
-            appBar = (AppBarLayout) findViewById(R.id.appBar);
-            appBar.setVisibility(View.VISIBLE);
-
-        }
-        public void setMapFragment(){
-            FragmentTransaction fragmentsTransaction = getSupportFragmentManager().beginTransaction().setReorderingAllowed(true);
-            fragmentsTransaction.replace(R.id.nav_host_fragment, mapFragment, "map").addToBackStack("map").commit();
-            showCarDetails();
-            isInHome = false;
-            appBar = (AppBarLayout) findViewById(R.id.appBar);
-            appBar.setVisibility(View.INVISIBLE);
-        }
-
-        //handling user clicks
-        /*public void fabClick () {
-            fab = findViewById(R.id.fab);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(isInHome){
-                        formFragment bottomSheetFragment = new formFragment();
-                        bottomSheetFragment.show( getSupportFragmentManager(), bottomSheetFragment.getTag());
+    //handling user clicks
+    public void fabClick () {
+        fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isInHome){
+                    formFragment bottomSheetFragment = new formFragment();
+                    bottomSheetFragment.show( getSupportFragmentManager(), bottomSheetFragment.getTag());
+                }else {
+                    if(carDetailsShowed){
+                        hideCarDetails();
+                        carDetailsShowed = false;
                     }else {
-                        if(carDetailsShowed){
+                        showCarDetails();
+                        carDetailsShowed = true;
+                    }
+                }
+
+            }
+        });
+
+    }
+    public void btmNavViewClicks(){
+        btmNavView =(BottomNavigationView) findViewById(R.id.bottomNavigationView);
+        btmNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.homeIcon:
+                        if(!isInHome){
                             hideCarDetails();
-                            carDetailsShowed = false;
-                        }else {
-                            showCarDetails();
-                            carDetailsShowed = true;
+                            setHomeFragment(carList);
+                            fab.setImageResource(R.drawable.ic_add);
+                            isInHome = true;
                         }
-                    }
-
+                        return true;
+                    case R.id.locationIcon:
+                        if(isInHome){
+                            setMapFragment();
+                            fab.setImageResource(R.drawable.ic_cursor_outline);
+                            isInHome = false;
+                        }
+                        return true;
                 }
-            });
-
-        }*/
-        public void btmNavViewClicks(){
-            btmNavView =(BottomNavigationView) findViewById(R.id.bottomNavigationView);
-            btmNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    switch (item.getItemId()){
-                        case R.id.placeHolder:
-                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.nav_host_fragment, new formFragment0()).commit();
-                        case R.id.homeButton:
-                                hideCarDetails();
-                                //setHomeFragment(carList);
-                                fab.setImageResource(R.drawable.ic_add);
-                                isInHome = true;
-                            return true;
-                        case R.id.mapButton:
-                                setMapFragment();
-                                fab.setImageResource(R.drawable.ic_cursor_outline);
-                                isInHome = false;
-
-                            return true;
-                    }
-                    return false;
-                }
-            });
-        }
-
-        //Car Details Fragment Transactions
-        void showCarDetails(){
-            FragmentTransaction fragmentsTransaction = getSupportFragmentManager().beginTransaction().setReorderingAllowed(true);
-            if(!carDetails.isAdded()){
-                fragmentsTransaction.setCustomAnimations(R.anim.up, R.anim.down)
-                        .add(R.id.nav_host_fragment,carDetails,"details")
-                        .addToBackStack(null)
-                        .commit();
-            }else{
-                fragmentsTransaction.setCustomAnimations(R.anim.up, R.anim.down)
-                        .show(getSupportFragmentManager().findFragmentByTag("details"))
-                        .addToBackStack(null)
-                        .commit();
+                return false;
             }
-            carDetailsShowed = true;
+        });
+    }
+
+    //Car Details Fragment Transactions
+    void showCarDetails(){
+        FragmentTransaction fragmentsTransaction = getSupportFragmentManager().beginTransaction().setReorderingAllowed(true);
+        if(!carDetails.isAdded()){
+            fragmentsTransaction.setCustomAnimations(R.anim.up, R.anim.down)
+                    .add(R.id.fragmentContainer,carDetails,"details")
+                    .addToBackStack(null)
+                    .commit();
+        }else{
+            fragmentsTransaction.setCustomAnimations(R.anim.up, R.anim.down)
+                    .show(getSupportFragmentManager().findFragmentByTag("details"))
+                    .addToBackStack(null)
+                    .commit();
         }
-        void hideCarDetails(){
-            FragmentTransaction fragmentsTransaction = getSupportFragmentManager().beginTransaction().setReorderingAllowed(true);
-            if(carDetails.isAdded()){
-                fragmentsTransaction.setCustomAnimations(R.anim.up, R.anim.down).hide(carDetails).commit();
-                carDetailsShowed = false;
+        carDetailsShowed = true;
+    }
+    void hideCarDetails(){
+        FragmentTransaction fragmentsTransaction = getSupportFragmentManager().beginTransaction().setReorderingAllowed(true);
+        if(carDetails.isAdded()){
+            fragmentsTransaction.setCustomAnimations(R.anim.up, R.anim.down).hide(carDetails).commit();
+            carDetailsShowed = false;
+        }
+    }
+
+    //search bar animations
+    public void searchBtnClick(){
+        ImageButton search = (ImageButton) findViewById(R.id.search_btn);
+        ConstraintLayout topAppBar= (ConstraintLayout) findViewById(R.id.top_app_bar);
+        RelativeLayout userIcon = (RelativeLayout) findViewById(R.id.userBtn);
+        ImageButton cancelBtn = (ImageButton) findViewById(R.id.cansel_btn);
+        EditText searchBar = (EditText) findViewById(R.id.editText_search);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TransitionManager.beginDelayedTransition(topAppBar,new AutoTransition());
+                userIcon.setVisibility(View.GONE);
+                search.setVisibility(View.GONE);
+                cancelBtn.setVisibility(View.VISIBLE);
+                animSearchAppaire(searchBar, topAppBar);
+                searchBar.setVisibility(View.VISIBLE);
+                searchBar.setWidth(topAppBar.getWidth()-80);
+
+                // change the fragment
+                Fragment fragment = new SearchFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,fragment).commit();
             }
-        }
+        });
+    }
+    public void cancelSearchClick(){
+        ImageButton cancelBtn = (ImageButton) findViewById(R.id.cansel_btn);
+        ImageButton search = (ImageButton) findViewById(R.id.search_btn);
+        ConstraintLayout topAppBar= (ConstraintLayout) findViewById(R.id.top_app_bar);
+        RelativeLayout userIcon = (RelativeLayout) findViewById(R.id.userBtn);
+        EditText searchBar = (EditText) findViewById(R.id.editText_search);
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TransitionManager.beginDelayedTransition(topAppBar,new AutoTransition());
+                userIcon.setVisibility(View.VISIBLE);
+                search.setVisibility(View.VISIBLE);
+                cancelBtn.setVisibility(View.GONE);
+                searchBar.setVisibility(View.GONE);
+                animSearchDisappaire(searchBar, topAppBar);
+                searchBar.setWidth(0);
+                // change the fragment
+                setHomeFragment(carList);
+            }
+        });
+    }
 
-        //search bar animations
-        public void searchBtnClick(){
-            ImageButton search = (ImageButton) findViewById(R.id.search_btn);
-            ConstraintLayout topAppBar= (ConstraintLayout) findViewById(R.id.top_app_bar);
-            RelativeLayout userIcon = (RelativeLayout) findViewById(R.id.userBtn);
-            ImageButton cancelBtn = (ImageButton) findViewById(R.id.cansel_btn);
-            EditText searchBar = (EditText) findViewById(R.id.editText_search);
-            search.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    TransitionManager.beginDelayedTransition(topAppBar,new AutoTransition());
-                    userIcon.setVisibility(View.GONE);
-                    search.setVisibility(View.GONE);
-                    cancelBtn.setVisibility(View.VISIBLE);
-                    animSearchAppaire(searchBar, topAppBar);
-                    searchBar.setVisibility(View.VISIBLE);
-                    searchBar.setWidth(topAppBar.getWidth()-80);
+    //profil animations
+    public void profilAnim (){
 
-                    // change the fragment
-                    Fragment fragment = new SearchFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,fragment).commit();
+        profil = findViewById(R.id.user);
+        profil.setOnClickListener(new View.OnClickListener() {
+            boolean clicked = false;
+            @Override
+            public void onClick(View v) {
+                if(!clicked){
+                    animSettingsIN ();
+                    animInfoIN ();
+                    animLogoutIN ();
+                    clicked = true;
+                }else {
+                    animSettingsOUT ();
+                    animInfoOUT ();
+                    animLogoutOUT ();
+                    clicked = false;
                 }
-            });
-        }
-        public void cancelSearchClick(){
-            ImageButton cancelBtn = (ImageButton) findViewById(R.id.cansel_btn);
-            ImageButton search = (ImageButton) findViewById(R.id.search_btn);
-            ConstraintLayout topAppBar= (ConstraintLayout) findViewById(R.id.top_app_bar);
-            RelativeLayout userIcon = (RelativeLayout) findViewById(R.id.userBtn);
-            EditText searchBar = (EditText) findViewById(R.id.editText_search);
-            cancelBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    TransitionManager.beginDelayedTransition(topAppBar,new AutoTransition());
-                    userIcon.setVisibility(View.VISIBLE);
-                    search.setVisibility(View.VISIBLE);
-                    cancelBtn.setVisibility(View.GONE);
-                    searchBar.setVisibility(View.GONE);
-                    animSearchDisappaire(searchBar, topAppBar);
-                    searchBar.setWidth(0);
-                    // change the fragment
-                    // TODO setHomeFragment(carList);
-                }
-            });
-        }
 
-        //profil animations
-        public void profilAnim (){
+            }
+        });
 
-            profil = findViewById(R.id.user);
-            profil.setOnClickListener(new View.OnClickListener() {
-                boolean clicked = false;
-                @Override
-                public void onClick(View v) {
-                    if(!clicked){
-                        animSettingsIN ();
-                        animInfoIN ();
-                        animLogoutIN ();
-                        clicked = true;
-                    }else {
-                        animSettingsOUT ();
-                        animInfoOUT ();
-                        animLogoutOUT ();
-                        clicked = false;
-                    }
-
-                }
-            });
-
-        }
+    }
     public void animSettingsIN (){
         settings = findViewById(R.id.settings);
 
@@ -373,8 +338,8 @@ public class MainActivity extends AppCompatActivity {
         if(i.getExtras() != null ) {
             if (i.getExtras().getString("SENDER_KEY") == "QRscanner") {
                 Car car = (Car) i.getSerializableExtra("CarDataList");
-                //appendCarList(car);
-                //TODO setHomeFragment(this.carList);
+                appendCarList(car);
+                setHomeFragment(this.carList);
             }
         }
     }
