@@ -10,13 +10,13 @@ import java.util.List;
 public class CarRepository {
     private com.example.driverapp.Models.CarDao carDao;
     private LiveData<List<Car>> allCars;
-    private List<Car> carList;
+    //private List<Car> carList;
 
     public CarRepository (Application application){
         CarDb carDatabase = CarDb.getInstance(application);
         carDao = carDatabase.carDao();
         allCars = carDao.getAllCars();
-        carList = carDao.getCarList();
+        //carList = carDao.getCarList();
     }
 
     public void insert (Car car) {
@@ -35,7 +35,7 @@ public class CarRepository {
         return allCars;
     }
 
-    public List<Car> getCarList () {return carList; }
+    //public List<Car> getCarList () {return carList; }
 
     private static class InsertCarAsyncTask extends AsyncTask<Car, Void, Void> {
         private com.example.driverapp.Models.CarDao carDao;

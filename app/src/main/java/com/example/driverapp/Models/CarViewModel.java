@@ -10,7 +10,7 @@ import java.util.List;
 public class CarViewModel extends AndroidViewModel {
     com.example.driverapp.Models.CarRepository repository;
     LiveData<List<Car>> allCars;
-    List<Car> carList;
+    //List<Car> carList;
 
     public CarViewModel(Application application){
         super(application);
@@ -34,5 +34,5 @@ public class CarViewModel extends AndroidViewModel {
         return repository.getAllCars();
     }
 
-    public List<Car> getCarList () { return repository.getCarList(); }
+    //public List<Car> getCarList () { return repository.getCarList(); }
 }

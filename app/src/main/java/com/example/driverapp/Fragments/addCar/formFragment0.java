@@ -56,7 +56,9 @@ public class formFragment0 extends Fragment {
         btnFillManually.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 bottomSheetFragment.setFragment1();
+
             }
         });
     }
@@ -70,7 +72,7 @@ public class formFragment0 extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
-                    com.example.driverapp.Fragments.QrCodeFragment QrFragment = new com.example.driverapp.Fragments.QrCodeFragment();
+                    QrCodeFragment QrFragment = new QrCodeFragment();
                     ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.CAMERA}, PackageManager.PERMISSION_GRANTED);
                     QrFragment.show(getActivity().getSupportFragmentManager(), "QrFragment");
                 }catch (Exception e){

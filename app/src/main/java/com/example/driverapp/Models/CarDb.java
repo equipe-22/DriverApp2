@@ -45,8 +45,9 @@ public abstract class CarDb extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-//            carDao.insert(new Car("Opel", "Astra", "Blue", "01937411431"
-            //, "HH<>23df", "0664314069"));
+            carDao.insert(new Car("Kia", "Cerato", "013439 116 16", "HH<>24df", "0664314069"));
+            carDao.insert(new Car("Opel", "Astra", "1324253462", "HHd3f<>4", "012345436"));
+
             return null;
         }
     }
