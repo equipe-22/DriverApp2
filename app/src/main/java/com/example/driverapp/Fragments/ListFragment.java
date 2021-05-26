@@ -105,11 +105,8 @@ public class ListFragment extends Fragment {
                         selectedCar.setLastTrack(new Date(System.currentTimeMillis()).toLocaleString());
                     }
                     MainActivity.currTrackedCar = selectedCar;
-                    mainActivity.fab.setImageResource(R.drawable.ic_cursor_outline);
-                    mainActivity.isInHome = false;
-                    mainActivity.btmNavView.setSelectedItemId(R.id.mapButton);
                     mainActivity.setMapFragment();
-                    mainActivity.showCarDetails(selectedCar);
+                    mainActivity.btmNavView.setSelectedItemId(R.id.mapButton);
                     break;
 
             }

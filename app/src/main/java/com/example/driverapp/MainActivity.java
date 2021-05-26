@@ -55,10 +55,11 @@ public class MainActivity extends AppCompatActivity {
 
     public MapFragment mapFragment = new MapFragment();
     public CarDetailsFragment carDetails;
+    public Boolean isInHome;
+
+    //UI
     public BottomNavigationView btmNavView;
     public FloatingActionButton fab;
-    public Boolean isInHome;
-    public Boolean carDetailsShowed;
     public ImageButton profil;
     public ImageButton settings;
     public ImageButton info;
@@ -201,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        findViews();
         ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS}, PackageManager.PERMISSION_GRANTED);
         //ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, PackageManager.PERMISSION_GRANTED);
        //intantiate the CarViewModel
@@ -233,6 +235,9 @@ public class MainActivity extends AppCompatActivity {
     }
     //setting main fragments
     public void setHomeFragment() {
+        //set the btm UI
+        fab.setImageResource(R.drawable.ic_add);
+        //set the fragments
         updateCarsList();
         if(myCarsList.isEmpty()) {
             EmptyStateFragment fragment = new EmptyStateFragment();
@@ -242,20 +247,22 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment,"List").commit();
         }
         isInHome = true;
-        appBar = (AppBarLayout) findViewById(R.id.appBar);
         appBar.setVisibility(View.VISIBLE);
     }
 
     public void setMapFragment(){
+        //set the btm UI
+        fab.setImageResource(R.drawable.ic_cursor_outline);
+
+        //set the fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, mapFragment, "map").addToBackStack("map").commit();
+        if(currTrackedCar != null) showCarDetails(currTrackedCar);
         isInHome = false;
-        appBar = (AppBarLayout) findViewById(R.id.appBar);
         appBar.setVisibility(View.INVISIBLE);
     }
 
     //handling user clicks
     public void fabClick () {
-        fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -271,18 +278,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void btmNavViewClicks(){
-        btmNavView =(BottomNavigationView) findViewById(R.id.bottomNavigationView);
         btmNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.homeButton:
                         setHomeFragment();
-                        fab.setImageResource(R.drawable.ic_add);
                     return true;
                     case R.id.mapButton:
-                            setMapFragment();
-                            fab.setImageResource(R.drawable.ic_cursor_outline);
+                        setMapFragment();
                     return true;
                 }
                 return false;
@@ -305,13 +309,11 @@ public class MainActivity extends AppCompatActivity {
                     .addToBackStack(null)
                     .commit();
         }
-        carDetailsShowed = true;
     }
     public void hideCarDetails(){
         FragmentTransaction fragmentsTransaction = getSupportFragmentManager().beginTransaction().setReorderingAllowed(true);
         if(carDetails.isAdded()){
             fragmentsTransaction.setCustomAnimations(R.anim.up, R.anim.down).hide(carDetails).commit();
-            carDetailsShowed = false;
         }
     }
 
@@ -364,7 +366,6 @@ public class MainActivity extends AppCompatActivity {
     //profil animations
     public void profilAnim (){
 
-        profil = findViewById(R.id.user);
         profil.setOnClickListener(new View.OnClickListener() {
             boolean clicked = false;
             @Override
@@ -386,8 +387,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void animSettingsIN (){
-        settings = findViewById(R.id.settings);
-
         Animation animation = new TranslateAnimation(0, 100,0, 0);
         animation.setDuration(300);
         animation.setFillAfter(true);
@@ -395,7 +394,6 @@ public class MainActivity extends AppCompatActivity {
         settings.setVisibility( View.VISIBLE );
     }
     public void animInfoIN (){
-        info = findViewById(R.id.info);
 
         Animation animation = new TranslateAnimation(0, 170,0, 0);
         animation.setDuration(300);
@@ -405,8 +403,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void animLogoutIN (){
-        logout = findViewById(R.id.logout);
-
         Animation animation = new TranslateAnimation(0, 240,0, 0);
         animation.setDuration(300);
         animation.setFillAfter(true);
@@ -415,7 +411,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void animSettingsOUT (){
-        settings = findViewById(R.id.settings);
 
         Animation animation = new TranslateAnimation(100, 0,0, 0);
         animation.setDuration(300);
@@ -424,7 +419,6 @@ public class MainActivity extends AppCompatActivity {
         settings.setVisibility( View.VISIBLE );
     }
     public void animInfoOUT (){
-        info = findViewById(R.id.info);
 
         Animation animation = new TranslateAnimation(170, 0,0, 0);
         animation.setDuration(300);
@@ -434,7 +428,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void animLogoutOUT (){
-        logout = findViewById(R.id.logout);
 
         Animation animation = new TranslateAnimation(240, 0,0, 0);
         animation.setDuration(300);
@@ -484,4 +477,15 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.SEND_SMS}, PackageManager.PERMISSION_GRANTED);
     }
 }
+
+
+    private void findViews(){
+          btmNavView =(BottomNavigationView) findViewById(R.id.bottomNavigationView);
+          fab = (FloatingActionButton) findViewById(R.id.fab);
+          profil= (ImageButton) findViewById(R.id.user);
+          settings =(ImageButton) findViewById(R.id.settings);
+         info =(ImageButton) findViewById(R.id.info);
+        logout= (ImageButton) findViewById(R.id.logout);
+        appBar =(AppBarLayout) findViewById(R.id.appBar);
+    }
 }

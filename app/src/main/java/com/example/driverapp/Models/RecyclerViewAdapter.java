@@ -225,11 +225,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 }
 
                 MainActivity.currTrackedCar = carList.get(position);
-                mainActivity.fab.setImageResource(R.drawable.ic_cursor_outline);
-                mainActivity.isInHome = false;
-                mainActivity.btmNavView.setSelectedItemId(R.id.mapButton);
                 mainActivity.setMapFragment();
-                mainActivity.showCarDetails(carList.get(position));
+                mainActivity.btmNavView.setSelectedItemId(R.id.mapButton);
             }
         });
         holder.localiserRacco.setOnClickListener(new View.OnClickListener() {
@@ -244,11 +241,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     carList.get(position).setLastTrack(new Date(System.currentTimeMillis()).toLocaleString());
                 }
                 MainActivity.currTrackedCar = carList.get(position);
-                mainActivity.fab.setImageResource(R.drawable.ic_cursor_outline);
-                mainActivity.isInHome = false;
-                mainActivity.btmNavView.setSelectedItemId(R.id.mapButton);
                 mainActivity.setMapFragment();
-                mainActivity.showCarDetails(carList.get(position));
+                mainActivity.btmNavView.setSelectedItemId(R.id.mapButton);
             }
         });
     }

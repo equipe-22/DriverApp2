@@ -50,7 +50,7 @@ public class MapFragment extends Fragment {
         public void onMapReady(GoogleMap googleMap) {
             //TODO: read the comments bellow
             /**
-             * this map fragment is called with one of two manners
+             * this map fragment is called in one of two manners
              * 1: if the user navigates to the map without selecting a car (directly from the btm menu)
                 *here we figure out two cases:
                     *1.a- if the current tracked car (static) in the main activity is null: we don't show(the marker and the car details)
