@@ -220,8 +220,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 sinon on modifie pas sa date de derniere localisation, parece que elle est modifiee
                 quand on click sur le button curseur (in center) sur la map
                 */
-                if (carList.get(position).getLastTrack() == null){
-                    carList.get(position).setLastTrack(new Date(System.currentTimeMillis()).toLocaleString());
+                if (carList.get(position).getLastTrackDate() == null){
+                    carList.get(position).setLastTrackDate(new Date(System.currentTimeMillis()).toLocaleString());
                 }
 
                 MainActivity.currTrackedCar = carList.get(position);
@@ -237,8 +237,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 sinon on modifie pas sa date de derniere localisation, parece que elle est modifiee
                 quand on click sur le button curseur (in center) sur la map
                 */
-                if (carList.get(position).getLastTrack() == null){
-                    carList.get(position).setLastTrack(new Date(System.currentTimeMillis()).toLocaleString());
+                if (carList.get(position).getLastTrackDate() == null){
+                    carList.get(position).setLastTrackDate(new Date(System.currentTimeMillis()).toLocaleString());
                 }
                 MainActivity.currTrackedCar = carList.get(position);
                 mainActivity.setMapFragment();

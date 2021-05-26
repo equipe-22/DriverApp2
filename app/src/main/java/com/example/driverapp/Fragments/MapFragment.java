@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.driverapp.MainActivity;
+import com.example.driverapp.Models.Car;
 import com.example.driverapp.Models.Coord;
 import com.example.driverapp.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -29,12 +31,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class MapFragment extends Fragment {
 
-    private String carName;
-
-    public MapFragment(String carName) {
-        this.carName = carName;
-    }
-
     public MapFragment(){
 
     }
@@ -52,26 +48,26 @@ public class MapFragment extends Fragment {
             /**
              * this map fragment is called in one of two manners
              * 1: if the user navigates to the map without selecting a car (directly from the btm menu)
-                *here we figure out two cases:
-                    *1.a- if the current tracked car (static) in the main activity is null: we don't show(the marker and the car details)
-                    *1.b- else : we show the car details, and:
-                        *1.b.1- if the car coordinates != null: we show them with a (previous_location_marker)
-                        *1_b.2- else: we don't show the marker (but car details still shown)
-
+             *here we figure out two cases:
+             *1.a- if the current tracked car (static) in the main activity is null: we don't show(the marker and the car details)
+             *1.b- else : we show the car details, and:
+             *1.b.1- if the car coordinates != null: we show them with a (previous_location_marker)
+             *1_b.2- else: we don't show the marker (but car details still shown)
              * 2: if the user selects a car to track(by clicking on "view on map button"(or its shortcut in collapsed version),
-                or by swiping to right): this car becomes the current tracked car (static) in the main activity, and we repeat 1.b;
-
+             or by swiping to right): this car becomes the current tracked car (static) in the main activity, and we repeat 1.b;
              * 3: now when the user is on the map, and the car details of the car is shown and he clicked on the CURSOR
-                -> the message is sent to the car phone number, and the sms Listener waits for the location sent over sms
-                -> when we get the coordinates, we pin a (current_location_marker)
+             -> the message is sent to the car phone number, and the sms Listener waits for the location sent over sms
+             -> when we get the coordinates, we pin a (current_location_marker)
              */
+            if (MainActivity.currTrackedCar.getLastLocationLat() != null &&
+                    MainActivity.currTrackedCar.getLastLocationLng() != null) {
 
-             Coord cord = new Coord();   //objet de class Coord
-                LatLng latLng = new LatLng(cord.lat, cord.lng); //cord.lat et cord.lng contient les 2 coordonées
-                googleMap.addMarker(new MarkerOptions().position(latLng).title(carName).icon(BitmapDescriptorFactory.fromResource(R.drawable.car_marker)));
+                Car trackedCar = MainActivity.currTrackedCar;
+                LatLng latLng = new LatLng(trackedCar.getLastLocationLat(), trackedCar.getLastLocationLng()); //cord.lat et cord.lng contient les 2 coordonées
+                googleMap.addMarker(new MarkerOptions().position(latLng).title(trackedCar.getMarque()+" "+trackedCar.getModele()).icon(BitmapDescriptorFactory.fromResource(R.drawable.car_marker)));
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16), 3000, null);
-
+            }
         }
     };
 

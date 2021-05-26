@@ -42,6 +42,9 @@ public class SmsListener extends BroadcastReceiver {
                 {
                     Coord coord = new Coord();
                     coord.recup_coord(message);
+                    MainActivity.currTrackedCar.setLastLocationLat(coord.getLat());
+                    MainActivity.currTrackedCar.setLastLocationLng(coord.getLng());
+
                     Intent i = new Intent();
                     i.setClassName("com.example.driverapp", "com.example.driverapp.Fragments.MapFragment");
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

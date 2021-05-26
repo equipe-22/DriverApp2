@@ -1,16 +1,9 @@
 package com.example.driverapp.Models;
 
-import android.icu.util.LocaleData;
-import android.widget.ImageButton;
-
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
 
 import java.io.Serializable;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity (tableName = "car_table")
 public class Car implements Serializable {
@@ -22,7 +15,10 @@ public class Car implements Serializable {
     private String matricule;
     private String codeSecret;
     private String numTele;
-    private String lastTrack ;
+    private String lastTrackDate ;
+    private Double lastLocationLng;
+    private Double lastLocationLat;
+
 
 
     public Car(String marque, String modele, String matricule, String codeSecret, String numTele) {
@@ -40,6 +36,7 @@ public class Car implements Serializable {
         this.codeSecret = carData[3];
         this.numTele = carData[4];
     }
+
 
     @Override
     public String toString() {
@@ -101,11 +98,28 @@ public class Car implements Serializable {
         this.id = id;
     }
 
-    public String getLastTrack() {
-        return lastTrack;
+    public String getLastTrackDate() {
+        return lastTrackDate;
     }
 
-    public void setLastTrack(String lastTrack) {
-        this.lastTrack = lastTrack;
+    public void setLastTrackDate(String lastTrackDate) {
+        this.lastTrackDate = lastTrackDate;
+    }
+
+
+    public Double getLastLocationLng() {
+        return lastLocationLng;
+    }
+
+    public void setLastLocationLng(Double lastLocationLng) {
+        this.lastLocationLng = lastLocationLng;
+    }
+
+    public Double getLastLocationLat() {
+        return lastLocationLat;
+    }
+
+    public void setLastLocationLat(Double lastLocationLat) {
+        this.lastLocationLat = lastLocationLat;
     }
 }

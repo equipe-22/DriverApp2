@@ -101,8 +101,8 @@ public class ListFragment extends Fragment {
                     sinon on modifie pas sa date de derniere localisation, parece que elle est modifiee
                     quand on click sur le button curseur (in center) sur la map
                     */
-                    if (selectedCar.getLastTrack() == null){
-                        selectedCar.setLastTrack(new Date(System.currentTimeMillis()).toLocaleString());
+                    if (selectedCar.getLastTrackDate() == null){
+                        selectedCar.setLastTrackDate(new Date(System.currentTimeMillis()).toLocaleString());
                     }
                     MainActivity.currTrackedCar = selectedCar;
                     mainActivity.setMapFragment();

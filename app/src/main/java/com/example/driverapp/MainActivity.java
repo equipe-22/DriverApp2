@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
                     formFragment bottomSheetFragment = new formFragment();
                     bottomSheetFragment.show( getSupportFragmentManager(), bottomSheetFragment.getTag());
                 }else {
-                    currTrackedCar.setLastTrack(new Date(System.currentTimeMillis()).toLocaleString());
+                    currTrackedCar.setLastTrackDate(new Date(System.currentTimeMillis()).toLocaleString());
                     requestLocation();
                 }
             }
@@ -477,7 +477,6 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.SEND_SMS}, PackageManager.PERMISSION_GRANTED);
     }
 }
-
 
     private void findViews(){
           btmNavView =(BottomNavigationView) findViewById(R.id.bottomNavigationView);

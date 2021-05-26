@@ -60,9 +60,9 @@ public class CarDetailsFragment extends Fragment {
         SimpleDateFormat fh = new SimpleDateFormat("HH");
         SimpleDateFormat fm = new SimpleDateFormat("mm");
 
-        date.setText(fd.format(Date.parse(thisCar.getLastTrack())));
-        hour.setText(fh.format(Date.parse(thisCar.getLastTrack())));
-        minute.setText(fm.format(Date.parse(thisCar.getLastTrack())));
+        date.setText(fd.format(Date.parse(thisCar.getLastTrackDate())));
+        hour.setText(fh.format(Date.parse(thisCar.getLastTrackDate())));
+        minute.setText(fm.format(Date.parse(thisCar.getLastTrackDate())));
 
 
     }
