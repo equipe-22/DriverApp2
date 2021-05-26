@@ -2,17 +2,10 @@ package com.example.driverapp.Fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,17 +13,12 @@ import android.view.ViewGroup;
 import com.example.driverapp.Models.Coord;
 import com.example.driverapp.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
-import com.google.android.gms.maps.StreetViewPanorama;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.SupportStreetViewPanoramaFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.LatLng;
@@ -39,19 +27,17 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
-import java.util.List;
-
 public class MapFragment extends Fragment {
 
-    private static final String TAG = "MapsActivity";
-    private GoogleMap mMap;
-    private Geocoder geocoder;
-    private int ACCESS_LOCATION_REQUEST_CODE = 10001;
-    FusedLocationProviderClient fusedLocationProviderClient;
-    LocationRequest locationRequest;
-    Marker userLocationMarker;
-    Circle userLocationAccuracyCircle;
+    private String carName;
+
+    public MapFragment(String carName) {
+        this.carName = carName;
+    }
+
+    public MapFragment(){
+
+    }
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -59,33 +45,33 @@ public class MapFragment extends Fragment {
          * Manipulates the map once available.
          * This callback is triggered when the map is ready to be used.
          * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            Coord cord = new Coord();   //objet de class Coord
-            LatLng latLng = new LatLng(cord.lat, cord.lng); //cord.lat et cord.lng contient les 2 coordonées
-            LatLng ESI = new LatLng(36.7049326, 3.1724691);
-            googleMap.addMarker(new MarkerOptions().position(ESI).title("ESI").icon(BitmapDescriptorFactory.fromResource(R.drawable.car_marker)));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(ESI));
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(ESI, 20), 3000, null);
+            //TODO: read the comments bellow
+            /**
+             * this map fragment is called with one of two manners
+             * 1: if the user navigates to the map without selecting a car (directly from the btm menu)
+                *here we figure out two cases:
+                    *1.a- if the current tracked car (static) in the main activity is null: we don't show(the marker and the car details)
+                    *1.b- else : we show the car details, and:
+                        *1.b.1- if the car coordinates != null: we show them with a (previous_location_marker)
+                        *1_b.2- else: we don't show the marker (but car details still shown)
 
-        }
-    };
-    private GoogleMap.OnMapClickListener mapClickListener = new GoogleMap.OnMapClickListener() {
-        @Override
-        public void onMapClick(@NonNull @NotNull LatLng latLng) {
+             * 2: if the user selects a car to track(by clicking on "view on map button"(or its shortcut in collapsed version),
+                or by swiping to right): this car becomes the current tracked car (static) in the main activity, and we repeat 1.b;
 
-        }
-    };
-    private GoogleMap.OnMarkerClickListener markerClickListener = new GoogleMap.OnMarkerClickListener() {
-        @Override
-        public boolean onMarkerClick(@NonNull @NotNull Marker marker) {
+             * 3: now when the user is on the map, and the car details of the car is shown and he clicked on the CURSOR
+                -> the message is sent to the car phone number, and the sms Listener waits for the location sent over sms
+                -> when we get the coordinates, we pin a (current_location_marker)
+             */
 
-            return false;
+             Coord cord = new Coord();   //objet de class Coord
+                LatLng latLng = new LatLng(cord.lat, cord.lng); //cord.lat et cord.lng contient les 2 coordonées
+                googleMap.addMarker(new MarkerOptions().position(latLng).title(carName).icon(BitmapDescriptorFactory.fromResource(R.drawable.car_marker)));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16), 3000, null);
+
         }
     };
 
@@ -100,16 +86,9 @@ public class MapFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+
         if (mapFragment != null) {
-            mapFragment.getMapAsync(callback);
-            geocoder = new Geocoder(getContext());
-
-            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
-
-            locationRequest = LocationRequest.create();
-            locationRequest.setInterval(500);
-            locationRequest.setFastestInterval(500);
-            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+                mapFragment.getMapAsync(callback);
         }
     }
 }

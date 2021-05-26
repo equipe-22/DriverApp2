@@ -12,5 +12,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="soft_blue">#edf2fb</color>
     <color name="violet">#776ff8</color>
+    <color name="red">#D64445</color>
     <color name="violet_dark">#5F55FB</color>
+    <color name="green">#1B6A0D</color>
+
 </resources>

@@ -12,12 +12,15 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.driverapp.Fragments.addCar.formFragment;
 import com.example.driverapp.R;
 import com.hbb20.CountryCodePicker;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,24 +62,20 @@ public class formFragment1 extends Fragment {
                              Bundle savedInstanceState) {
         thisFragment = inflater.inflate(R.layout.fragment_form1, container, false);
         assignViews(thisFragment);
-        getPhoneNumberEdit();
+        button_suivant.setEnabled(false);
         ccp.registerCarrierNumberEditText(phone);
         ccp.setCountryForNameCode("DZ");
-
-        button_suivant.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                bottomSheetFragment.setPhoneNumber(phone.getText().toString());
-                bottomSheetFragment.setFragment2();
-
-
-            }
-        });
+        suivantButton(thisFragment);
+        annulerButton(thisFragment);
+        retourButton(thisFragment);
         return thisFragment;
     }
 
-
+    @Override
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getPhoneNumberEdit();
+    }
 
     public void annulerButton (View v){
         button_annuler = v.findViewById(R.id.annuler);
@@ -92,24 +91,18 @@ public class formFragment1 extends Fragment {
     }
 
 
-    /*public void suivantButton (View v){
+    public void suivantButton (View v){
 
         button_suivant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
-                // navigate to formFragment2
-                formFragment1Directions.ActionFormFragment1ToFormFragment2 action = formFragment1Directions.actionFormFragment1ToFormFragment2();
-                Navigation.findNavController(requireActivity(), R.id.fragmentContainer)
-                        .navigate(action);
-
+                formFragment.phoneNumber = ccp.getFullNumberWithPlus();
                 bottomSheetFragment.setFragment2();
-
             }
         });
 
 
-    }*/
+    }
     public void retourButton (View v) {
 
         button_retour.setOnClickListener(new View.OnClickListener() {
@@ -125,13 +118,14 @@ public class formFragment1 extends Fragment {
             phone.addTextChangedListener(new PhoneNumberFormattingTextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    button_suivant.setEnabled(false);
                 }
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if(ccp.isValidFullNumber()){
                         button_suivant.setEnabled(true);
-                        phoneErrors.setTextColor(Color.GREEN);
+                        phoneErrors.setTextColor(getResources().getColor(R.color.green));
                         phoneErrors.setText("This phone number is valid in "+ ccp.getSelectedCountryName());
                     }else {
                         if(phone.getText().toString().length()>0){

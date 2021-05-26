@@ -16,7 +16,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:orientation="vertical">
 
@@ -74,24 +74,27 @@
                     android:backgroundTint="@color/white"
                     android:paddingHorizontal="4dp"
                     android:paddingVertical="4dp"
-                    android:src="@drawable/ic_cursor_full"
+                    android:src="@drawable/ic_map3"
                     android:tint="@color/violet"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/expanded_cardView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:visibility="gone">
 
                 <RelativeLayout
                     android:id="@+id/bloc1"
-                    android:layout_width="208dp"
-                    android:layout_height="126dp"
+                    android:layout_width="188dp"
+                    android:layout_height="132dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -102,7 +105,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="1dp"
-                        android:layout_marginTop="28dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="12dp"
                         android:layout_toStartOf="@+id/value_matricule"
                         android:fontFamily="@font/montserrat_semibold"
@@ -151,28 +154,29 @@
 
                     <Button
                         android:id="@+id/localiser_btn"
-                        android:layout_width="119dp"
-                        android:layout_height="41dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_below="@id/key_code_secret"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="65dp"
-                        android:layout_marginBottom="6dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="19dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="9dp"
                         android:backgroundTint="@color/violet"
-                        android:drawableEnd="@drawable/ic_cursor_outline"
+                        android:drawableEnd="@drawable/ic_map2"
                         android:drawableTint="@color/white"
                         android:fontFamily="@font/montserrat_semibold"
-                        android:text="localiser"
+                        android:text="voir sur Map"
                         android:textAllCaps="true"
                         android:textSize="8sp" />
+
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_width="154dp"
-                    android:layout_height="123dp"
+                    android:layout_width="164dp"
+                    android:layout_height="129dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/bloc1"
@@ -190,9 +194,13 @@
                     <TextView
                         android:id="@+id/key_num_tele"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="27dp"
                         android:layout_below="@id/car_illustration"
-                        android:layout_marginTop="16dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="0dp"
                         android:fontFamily="@font/montserrat_semibold"
                         android:text="numéro de téléphone"
                         android:textAlignment="center"
@@ -206,16 +214,15 @@
                         android:layout_below="@+id/key_num_tele"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
                         android:layout_marginStart="0dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="1dp"
                         android:layout_marginEnd="0dp"
-                        android:layout_marginBottom="17dp"
                         android:fontFamily="@font/montserrat_medium"
                         android:text="056 83 23 17"
                         android:textAlignment="center"
                         android:textColor="@color/medium_grey"
                         android:textSize="15sp" />
+
                 </RelativeLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

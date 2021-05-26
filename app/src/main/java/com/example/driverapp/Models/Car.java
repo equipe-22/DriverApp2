@@ -1,9 +1,16 @@
 package com.example.driverapp.Models;
 
+import android.icu.util.LocaleData;
+import android.widget.ImageButton;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity (tableName = "car_table")
 public class Car implements Serializable {
@@ -15,6 +22,8 @@ public class Car implements Serializable {
     private String matricule;
     private String codeSecret;
     private String numTele;
+    private String lastTrack ;
+
 
     public Car(String marque, String modele, String matricule, String codeSecret, String numTele) {
         this.marque = marque;
@@ -42,6 +51,7 @@ public class Car implements Serializable {
                 ", numTele='" + numTele + '\'' +
                 '}';
     }
+
 
     public String getMarque() {
         return marque;
@@ -89,5 +99,13 @@ public class Car implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getLastTrack() {
+        return lastTrack;
+    }
+
+    public void setLastTrack(String lastTrack) {
+        this.lastTrack = lastTrack;
     }
 }

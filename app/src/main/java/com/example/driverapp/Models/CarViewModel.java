@@ -8,13 +8,14 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 public class CarViewModel extends AndroidViewModel {
-    com.example.driverapp.Models.CarRepository repository;
+
+    CarRepository repository;
     LiveData<List<Car>> allCars;
     //List<Car> carList;
 
     public CarViewModel(Application application){
         super(application);
-        repository = new com.example.driverapp.Models.CarRepository(application);
+        repository = new CarRepository(application);
         allCars = repository.getAllCars();
     }
 

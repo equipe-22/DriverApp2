@@ -74,6 +74,7 @@ public class formFragment0 extends Fragment {
                 try {
                     QrCodeFragment QrFragment = new QrCodeFragment();
                     ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.CAMERA}, PackageManager.PERMISSION_GRANTED);
+
                     QrFragment.show(getActivity().getSupportFragmentManager(), "QrFragment");
                 }catch (Exception e){
                     e.printStackTrace();

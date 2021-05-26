@@ -23,47 +23,7 @@ public class formFragment extends BottomSheetDialogFragment implements Parcelabl
 
     private Fragment fragment;
 
-    private String phoneNumber, codeSecret, marque, model, matricul;
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getCodeSecret() {
-        return codeSecret;
-    }
-
-    public void setCodeSecret(String codeSecret) {
-        this.codeSecret = codeSecret;
-    }
-
-    public String getMarque() {
-        return marque;
-    }
-
-    public void setMarque(String marque) {
-        this.marque = marque;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getMatricul() {
-        return matricul;
-    }
-
-    public void setMatricul(String matricul) {
-        this.matricul = matricul;
-    }
+    public static String phoneNumber, codeSecret, marque, model, matricul;
 
     public formFragment() {
         // Required empty public constructor

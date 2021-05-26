@@ -46,7 +46,7 @@
         <LinearLayout
             android:id="@+id/linearLayout3"
             android:layout_width="393dp"
-            android:layout_height="110dp"
+            android:layout_height="78dp"
             android:layout_margin="20dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
@@ -56,16 +56,16 @@
 
             <com.hbb20.CountryCodePicker
                 android:id="@+id/ccp"
-                android:layout_width="130dp"
-                android:layout_height="64dp"
+                android:layout_width="148dp"
+                android:layout_height="51dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/numeroInput"
-                android:layout_width="250dp"
-                android:layout_height="64dp"
+                android:layout_width="237dp"
+                android:layout_height="53dp"
                 android:layout_marginBottom="30dp"
                 android:gravity="center"
                 android:hint="@string/numero_de_telephone"
@@ -77,14 +77,13 @@
                 <com.google.android.material.textfield.TextInputEditText
 
                     android:id="@+id/phone"
-                    android:layout_width="250dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/input_container_design"
                     android:fontFamily="@font/montserrat_medium"
                     android:inputType="phone"
                     android:maxLines="1"
                     android:paddingHorizontal="20dp"
-
                     android:textSize="12sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -93,8 +92,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="366dp"
+            android:layout_height="22dp"
+            android:layout_marginBottom="32dp"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -1,17 +1,22 @@
 package com.example.driverapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.Log;
@@ -29,7 +34,7 @@ import com.example.driverapp.Fragments.EmptyStateFragment;
 import com.example.driverapp.Fragments.ListFragment;
 import com.example.driverapp.Fragments.MapFragment;
 import com.example.driverapp.Fragments.SearchFragment;
-import com.example.driverapp.Fragments.formFragment;
+import com.example.driverapp.Fragments.addCar.formFragment;
 import com.example.driverapp.Models.Car;
 import com.example.driverapp.Models.CarDao;
 import com.example.driverapp.Models.CarViewModel;
@@ -37,48 +42,175 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class MainActivity extends AppCompatActivity {
 
-    MapFragment mapFragment = new MapFragment();
-    CarDetailsFragment carDetails = new CarDetailsFragment();
-    BottomNavigationView btmNavView;
-    FloatingActionButton fab;
+    public MapFragment mapFragment = new MapFragment();
+    public CarDetailsFragment carDetails;
+    public BottomNavigationView btmNavView;
+    public FloatingActionButton fab;
+    public Boolean isInHome;
+    public Boolean carDetailsShowed;
+    public ImageButton profil;
+    public ImageButton settings;
+    public ImageButton info;
+    public ImageButton logout;
+    public AppBarLayout appBar;
 
-    Boolean isInHome;
-    Boolean carDetailsShowed;
-    ImageButton profil;
-    ImageButton settings;
-    ImageButton info;
-    ImageButton logout;
-    AppBarLayout appBar;
+    public static CarViewModel myCars ;
+    public static List<Car> myCarsList = new List<Car>(){
 
+        @Override
+        public int size() {
+            return 0;
+        }
 
+        @Override
+        public boolean isEmpty() {
+            return false;
+        }
 
-    List<Car> carList = new ArrayList<Car>();
+        @Override
+        public boolean contains(@Nullable @org.jetbrains.annotations.Nullable Object o) {
+            return false;
+        }
 
-    public void appendCarList(Car car) {
-        this.carList.add(car);
-    }
+        @NonNull
+        @NotNull
+        @Override
+        public Iterator<Car> iterator() {
+            return null;
+        }
 
+        @NonNull
+        @NotNull
+        @Override
+        public Object[] toArray() {
+            return new Object[0];
+        }
+
+        @NonNull
+        @NotNull
+        @Override
+        public <T> T[] toArray(@NonNull @NotNull T[] a) {
+            return null;
+        }
+
+        @Override
+        public boolean add(Car car) {
+            return false;
+        }
+
+        @Override
+        public boolean remove(@Nullable @org.jetbrains.annotations.Nullable Object o) {
+            return false;
+        }
+
+        @Override
+        public boolean containsAll(@NonNull @NotNull Collection<?> c) {
+            return false;
+        }
+
+        @Override
+        public boolean addAll(@NonNull @NotNull Collection<? extends Car> c) {
+            return false;
+        }
+
+        @Override
+        public boolean addAll(int index, @NonNull @NotNull Collection<? extends Car> c) {
+            return false;
+        }
+
+        @Override
+        public boolean removeAll(@NonNull @NotNull Collection<?> c) {
+            return false;
+        }
+
+        @Override
+        public boolean retainAll(@NonNull @NotNull Collection<?> c) {
+            return false;
+        }
+
+        @Override
+        public void clear() {
+
+        }
+
+        @Override
+        public Car get(int index) {
+            return null;
+        }
+
+        @Override
+        public Car set(int index, Car element) {
+            return null;
+        }
+
+        @Override
+        public void add(int index, Car element) {
+
+        }
+
+        @Override
+        public Car remove(int index) {
+            return null;
+        }
+
+        @Override
+        public int indexOf(@Nullable @org.jetbrains.annotations.Nullable Object o) {
+            return 0;
+        }
+
+        @Override
+        public int lastIndexOf(@Nullable @org.jetbrains.annotations.Nullable Object o) {
+            return 0;
+        }
+
+        @NonNull
+        @NotNull
+        @Override
+        public ListIterator<Car> listIterator() {
+            return null;
+        }
+
+        @NonNull
+        @NotNull
+        @Override
+        public ListIterator<Car> listIterator(int index) {
+            return null;
+        }
+
+        @NonNull
+        @NotNull
+        @Override
+        public List<Car> subList(int fromIndex, int toIndex) {
+            return null;
+        }
+    };
+    public static Car currTrackedCar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS}, PackageManager.PERMISSION_GRANTED);
+        //ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, PackageManager.PERMISSION_GRANTED);
+       //intantiate the CarViewModel
 
-//        ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS}, PackageManager.PERMISSION_GRANTED);
-//        ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, PackageManager.PERMISSION_GRANTED);
-//        Car car = new Car("kia","cerato","098259","iiRR55~~","088475899");
-//        carList.add(car);
-//        CarViewModel cars = new CarViewModel(getApplication());
-//        Car car = new Car("Lamborgini","Veneno","40404040","33@@rrTT","+213793777738");
-//        cars.insert(car);
-//        carList = cars.getCarList();
+        myCars = new  ViewModelProvider(this, ViewModelProvider
+                .AndroidViewModelFactory.getInstance(this.getApplication()))
+                .get(CarViewModel.class);
 
-        setHomeFragment(carList);
+        updateCarsList();
+        setHomeFragment();
         fabClick();
         btmNavViewClicks();
         searchBtnClick();
@@ -89,28 +221,33 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        this.receiveData();
+        setHomeFragment();
     }
-
+    public void updateCarsList(){
+        myCars.getAllCars().observe(this, new Observer<List<Car>>() {
+            @Override
+            public void onChanged(List<Car> cars) {
+                myCarsList = cars;
+            }
+        });
+    }
     //setting main fragments
-    public void setHomeFragment(List<Car> carList) {
-        FragmentTransaction fragmentsTransaction = getSupportFragmentManager().beginTransaction().setReorderingAllowed(true);
-        if (carList.size() > 0) {
-            Fragment fragment = new ListFragment(carList);
-            fragmentsTransaction.replace(R.id.fragmentContainer, fragment).commit();
-        }else {
-            Fragment fragment = new EmptyStateFragment();
-            fragmentsTransaction.replace(R.id.fragmentContainer,fragment).commit();
+    public void setHomeFragment() {
+        updateCarsList();
+        if(myCarsList.isEmpty()) {
+            EmptyStateFragment fragment = new EmptyStateFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment,"Empty").commit();
+        } else {
+            Fragment fragment = new ListFragment(this);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment,"List").commit();
         }
         isInHome = true;
         appBar = (AppBarLayout) findViewById(R.id.appBar);
         appBar.setVisibility(View.VISIBLE);
-
     }
+
     public void setMapFragment(){
-        FragmentTransaction fragmentsTransaction = getSupportFragmentManager().beginTransaction().setReorderingAllowed(true);
-        fragmentsTransaction.replace(R.id.fragmentContainer, mapFragment, "map").addToBackStack("map").commit();
-        showCarDetails();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, mapFragment, "map").addToBackStack("map").commit();
         isInHome = false;
         appBar = (AppBarLayout) findViewById(R.id.appBar);
         appBar.setVisibility(View.INVISIBLE);
@@ -126,15 +263,9 @@ public class MainActivity extends AppCompatActivity {
                     formFragment bottomSheetFragment = new formFragment();
                     bottomSheetFragment.show( getSupportFragmentManager(), bottomSheetFragment.getTag());
                 }else {
-                    if(carDetailsShowed){
-                        hideCarDetails();
-                        carDetailsShowed = false;
-                    }else {
-                        showCarDetails();
-                        carDetailsShowed = true;
-                    }
+                    currTrackedCar.setLastTrack(new Date(System.currentTimeMillis()).toLocaleString());
+                    requestLocation();
                 }
-
             }
         });
 
@@ -145,21 +276,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.homeIcon:
-                        if(!isInHome){
-                            hideCarDetails();
-                            setHomeFragment(carList);
-                            fab.setImageResource(R.drawable.ic_add);
-                            isInHome = true;
-                        }
-                        return true;
-                    case R.id.locationIcon:
-                        if(isInHome){
+                    case R.id.homeButton:
+                        setHomeFragment();
+                        fab.setImageResource(R.drawable.ic_add);
+                    return true;
+                    case R.id.mapButton:
                             setMapFragment();
                             fab.setImageResource(R.drawable.ic_cursor_outline);
-                            isInHome = false;
-                        }
-                        return true;
+                    return true;
                 }
                 return false;
             }
@@ -167,7 +291,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Car Details Fragment Transactions
-    void showCarDetails(){
+    public void showCarDetails(Car car){
+        carDetails = new CarDetailsFragment(car);
         FragmentTransaction fragmentsTransaction = getSupportFragmentManager().beginTransaction().setReorderingAllowed(true);
         if(!carDetails.isAdded()){
             fragmentsTransaction.setCustomAnimations(R.anim.up, R.anim.down)
@@ -182,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
         }
         carDetailsShowed = true;
     }
-    void hideCarDetails(){
+    public void hideCarDetails(){
         FragmentTransaction fragmentsTransaction = getSupportFragmentManager().beginTransaction().setReorderingAllowed(true);
         if(carDetails.isAdded()){
             fragmentsTransaction.setCustomAnimations(R.anim.up, R.anim.down).hide(carDetails).commit();
@@ -231,7 +356,7 @@ public class MainActivity extends AppCompatActivity {
                 animSearchDisappaire(searchBar, topAppBar);
                 searchBar.setWidth(0);
                 // change the fragment
-                setHomeFragment(carList);
+                setHomeFragment();
             }
         });
     }
@@ -332,15 +457,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void receiveData() {
-        //RECEIVE DATA VIA INTENT
-        Intent i = getIntent();
-        if(i.getExtras() != null ) {
-            if (i.getExtras().getString("SENDER_KEY") == "QRscanner") {
-                Car car = (Car) i.getSerializableExtra("CarDataList");
-                appendCarList(car);
-                setHomeFragment(this.carList);
-            }
+    //SMS
+    public void sendSMS(String phoneNo,String SMS ) {
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNo, null, SMS, null, null);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            //Toast.makeText(this, "Failed to send message", Toast.LENGTH_SHORT).show();
         }
     }
+    //-------------------------------------
+    public void requestLocation(){
+    if(this.checkSelfPermission(Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+        Log.d("SendPosRequestFragment", "onClick: permission is granted");
+
+        //on prend le numero et le code secret de la voiture selectionee a tracker
+        String phoneNumber = currTrackedCar.getNumTele();
+        String secretMessage = currTrackedCar.getCodeSecret();
+
+        sendSMS(phoneNumber, secretMessage);
+
+        Log.d("SendPosRequestFragment", "onClick: message sent");
+    }else{
+        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.SEND_SMS}, PackageManager.PERMISSION_GRANTED);
+    }
+}
 }

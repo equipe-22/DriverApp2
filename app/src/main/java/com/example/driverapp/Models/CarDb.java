@@ -16,7 +16,7 @@ public abstract class CarDb extends RoomDatabase {
 
     private static CarDb instance;
 
-    public abstract com.example.driverapp.Models.CarDao carDao();
+    public abstract CarDao carDao();
 
     public static synchronized CarDb getInstance(Context context){
         if (instance == null){
@@ -37,7 +37,7 @@ public abstract class CarDb extends RoomDatabase {
     };
 
     private static class PopulateDbAsyncTask extends AsyncTask <Void, Void, Void> {
-        private com.example.driverapp.Models.CarDao carDao;
+        private CarDao carDao;
 
         private PopulateDbAsyncTask(CarDb carDb){
             carDao = carDb.carDao();
@@ -45,9 +45,6 @@ public abstract class CarDb extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            carDao.insert(new Car("Kia", "Cerato", "013439 116 16", "HH<>24df", "0664314069"));
-            carDao.insert(new Car("Opel", "Astra", "1324253462", "HHd3f<>4", "012345436"));
-
             return null;
         }
     }

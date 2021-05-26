@@ -15,7 +15,6 @@
         android:background="@drawable/bottom_sheet_background"
         android:name="androidx.navigation.fragment.NavHostFragment"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/bottom_sheet_nav_graph"
         />
 
 
