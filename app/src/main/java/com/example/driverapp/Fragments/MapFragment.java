@@ -59,14 +59,16 @@ public class MapFragment extends Fragment {
              -> the message is sent to the car phone number, and the sms Listener waits for the location sent over sms
              -> when we get the coordinates, we pin a (current_location_marker)
              */
-            if (MainActivity.currTrackedCar.getLastLocationLat() != null &&
-                    MainActivity.currTrackedCar.getLastLocationLng() != null) {
+            if (MainActivity.currTrackedCar != null) {
+                if (MainActivity.currTrackedCar.getLastLocationLat() != null &&
+                        MainActivity.currTrackedCar.getLastLocationLng() != null) {
 
-                Car trackedCar = MainActivity.currTrackedCar;
-                LatLng latLng = new LatLng(trackedCar.getLastLocationLat(), trackedCar.getLastLocationLng()); //cord.lat et cord.lng contient les 2 coordonées
-                googleMap.addMarker(new MarkerOptions().position(latLng).title(trackedCar.getMarque()+" "+trackedCar.getModele()).icon(BitmapDescriptorFactory.fromResource(R.drawable.car_marker)));
-                googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16), 3000, null);
+                    Car trackedCar = MainActivity.currTrackedCar;
+                    LatLng latLng = new LatLng(trackedCar.getLastLocationLat(), trackedCar.getLastLocationLng()); //cord.lat et cord.lng contient les 2 coordonées
+                    googleMap.addMarker(new MarkerOptions().position(latLng).title(trackedCar.getMarque() + " " + trackedCar.getModele()).icon(BitmapDescriptorFactory.fromResource(R.drawable.car_marker)));
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16), 3000, null);
+                }
             }
         }
     };

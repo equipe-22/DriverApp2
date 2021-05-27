@@ -68,14 +68,10 @@ public class formFragment1 extends Fragment {
         suivantButton(thisFragment);
         annulerButton(thisFragment);
         retourButton(thisFragment);
+        getPhoneNumberEdit();
         return thisFragment;
     }
 
-    @Override
-    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        getPhoneNumberEdit();
-    }
 
     public void annulerButton (View v){
         button_annuler = v.findViewById(R.id.annuler);

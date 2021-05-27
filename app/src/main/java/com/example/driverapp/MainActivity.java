@@ -1,19 +1,6 @@
 package com.example.driverapp;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -27,7 +14,16 @@ import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.driverapp.Fragments.CarDetailsFragment;
 import com.example.driverapp.Fragments.EmptyStateFragment;
@@ -36,7 +32,6 @@ import com.example.driverapp.Fragments.MapFragment;
 import com.example.driverapp.Fragments.SearchFragment;
 import com.example.driverapp.Fragments.addCar.formFragment;
 import com.example.driverapp.Models.Car;
-import com.example.driverapp.Models.CarDao;
 import com.example.driverapp.Models.CarViewModel;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -44,7 +39,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -66,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     public ImageButton logout;
     public AppBarLayout appBar;
 
+    //those attributes are Static, the app should only use those (you shouldn't instantiate ViewModel elsewhere forexample)
     public static CarViewModel myCars ;
     public static List<Car> myCarsList = new List<Car>(){
 
@@ -204,9 +199,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         findViews();
         ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS}, PackageManager.PERMISSION_GRANTED);
-        //ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, PackageManager.PERMISSION_GRANTED);
-       //intantiate the CarViewModel
 
+       //intantiate the CarViewModel
         myCars = new  ViewModelProvider(this, ViewModelProvider
                 .AndroidViewModelFactory.getInstance(this.getApplication()))
                 .get(CarViewModel.class);
@@ -225,6 +219,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         setHomeFragment();
     }
+
     public void updateCarsList(){
         myCars.getAllCars().observe(this, new Observer<List<Car>>() {
             @Override
@@ -249,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
         isInHome = true;
         appBar.setVisibility(View.VISIBLE);
     }
-
+    //switch to map
     public void setMapFragment(){
         //set the btm UI
         fab.setImageResource(R.drawable.ic_cursor_outline);
@@ -270,8 +265,10 @@ public class MainActivity extends AppCompatActivity {
                     formFragment bottomSheetFragment = new formFragment();
                     bottomSheetFragment.show( getSupportFragmentManager(), bottomSheetFragment.getTag());
                 }else {
-                    currTrackedCar.setLastTrackDate(new Date(System.currentTimeMillis()).toLocaleString());
-                    requestLocation();
+                    if(currTrackedCar != null){
+                        currTrackedCar.setLastTrackDate(new Date(System.currentTimeMillis()).toLocaleString());
+                        requestLocation();
+                    }
                 }
             }
         });
@@ -446,8 +443,6 @@ public class MainActivity extends AppCompatActivity {
         Animation animation = new TranslateAnimation(0,  topAppBar.getWidth() +80,0, 0);
         animation.setDuration(700);
         searchbar.startAnimation(animation);
-
-
     }
 
     //SMS

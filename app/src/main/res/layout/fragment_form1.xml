@@ -56,15 +56,16 @@
 
             <com.hbb20.CountryCodePicker
                 android:id="@+id/ccp"
-                android:layout_width="148dp"
-                android:layout_height="51dp"
+                android:layout_width="105dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/numeroInput"
-                android:layout_width="237dp"
+                android:layout_width="283dp"
                 android:layout_height="53dp"
                 android:layout_marginBottom="30dp"
                 android:gravity="center"

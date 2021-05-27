@@ -145,33 +145,10 @@ public class ListFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         //your deleting code
                         MainActivity.myCars.delete(adapter.carList.get(pos));
+                        if (MainActivity.currTrackedCar == dltCar) MainActivity.currTrackedCar = null;
                         adapter.notifyItemRemoved(pos);
                         dialog.dismiss();
-                        updateAdapterList();
-
-                        //make a snack bar for safe back
-                        Snackbar mySnackBar = Snackbar.make(recyclerView, dltCar.getMarque() + " " + dltCar.getModele()+" est supprimée", Snackbar.LENGTH_LONG)
-                        .setAction("Undo", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                MainActivity.myCars.insert(dltCar);
-                                adapter.setCars(MainActivity.myCarsList);
-                                adapter.notifyItemInserted(pos);
-                            }
-                        });
-                        mySnackBar.setCallback(new Snackbar.Callback(){
-                            @Override
-                            public void onDismissed(Snackbar transientBottomBar, int event) {
-                                super.onDismissed(transientBottomBar, event);
-                                checkIfLastCarDeleted();
-                            }
-
-                            @Override
-                            public void onShown(Snackbar sb) {
-                                super.onShown(sb);
-                            }
-                        });
-                        mySnackBar.show();
+                        checkIfLastCarDeleted();
 
                     }
                 })
@@ -184,22 +161,16 @@ public class ListFragment extends Fragment {
                 })
                 .create();
     }
-    private void updateAdapterList() {
+
+    private void checkIfLastCarDeleted() {
         MainActivity.myCars.getAllCars().observe(getViewLifecycleOwner(), new Observer<List<Car>>() {
             @Override
             public void onChanged(List<Car> cars) {
                 MainActivity.myCarsList = cars;
                 adapter.setCars(cars);
-            }
-        });
-    }
-    private void checkIfLastCarDeleted() {
-        MainActivity.myCars.getAllCars().observe(getViewLifecycleOwner(), new Observer<List<Car>>() {
-            @Override
-            public void onChanged(List<Car> cars) {
                 if(cars.isEmpty()){
-                    MainActivity.myCarsList = cars;
                     mainActivity.setHomeFragment();
+                    MainActivity.currTrackedCar = null;
                 }
             }
         });

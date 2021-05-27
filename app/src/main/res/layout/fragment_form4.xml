@@ -71,12 +71,14 @@
 
                     <RelativeLayout
                         android:id="@+id/bloc1"
-                        android:layout_width="195dp"
+                        android:layout_width="187dp"
                         android:layout_height="118dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/relativeLayout"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.4">
 
                         <TextView
                             android:id="@+id/car_name"
@@ -159,17 +161,20 @@
 
                     <RelativeLayout
                         android:id="@+id/relativeLayout"
-                        android:layout_width="159dp"
-                        android:layout_height="104dp"
+                        android:layout_width="158dp"
+                        android:layout_height="111dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/bloc1"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
                             android:id="@+id/car_illustration"
                             android:layout_width="70dp"
                             android:layout_height="50dp"
+                            android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
+                            android:layout_marginTop="0dp"
                             android:contentDescription="car illustration"
                             android:src="@drawable/car" />
 
@@ -192,16 +197,14 @@
 
                         <TextView
                             android:id="@+id/value_num_tele"
-                            android:layout_width="157dp"
-                            android:layout_height="24dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_below="@+id/key_num_tele"
                             android:layout_alignParentStart="true"
                             android:layout_alignParentEnd="true"
-                            android:layout_alignParentBottom="true"
                             android:layout_marginStart="1dp"
                             android:layout_marginTop="9dp"
                             android:layout_marginEnd="0dp"
-                            android:layout_marginBottom="6dp"
                             android:fontFamily="@font/montserrat_medium"
                             android:text="056 83 23 17"
                             android:textAlignment="center"
