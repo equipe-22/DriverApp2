@@ -4,9 +4,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsMessage;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.example.driverapp.Fragments.MapFragment;
 import com.example.driverapp.MainActivity;
 import com.example.driverapp.Models.Coord;
 
@@ -14,14 +18,19 @@ public class SmsListener extends BroadcastReceiver {
 
     private static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
     String phoneNumber;
+    String privateCode;
+
 
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        phoneNumber = MainActivity.currTrackedCar.getNumTele();
-        boolean stop = false;
+
 
         if (intent.getAction().equals(SMS_RECEIVED)) {
+            phoneNumber = MainActivity.currTrackedCar.getNumTele();
+            privateCode = MainActivity.currTrackedCar.getCodeSecret();
+            boolean stop = false;
+            Log.d("LocationRecieved","The location has been recieved");
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
                 Object[] pdus = (Object[]) bundle.get("pdus");
@@ -36,22 +45,21 @@ public class SmsListener extends BroadcastReceiver {
                 }
                 String sender = msgs[0].getOriginatingAddress();
                 String message = sb.toString();
-                //TODO : we have to make sure of the format of the phone number in the car app and the tracked app
 
-                if(PhoneNumberUtils.compare(phoneNumber, sender))
-                {
-                    Coord coord = new Coord();
-                    coord.recup_coord(message);
-                    MainActivity.currTrackedCar.setLastLocationLat(coord.getLat());
-                    MainActivity.currTrackedCar.setLastLocationLng(coord.getLng());
-
-                    Intent i = new Intent();
-                    i.setClassName("com.example.driverapp", "com.example.driverapp.Fragments.MapFragment");
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(i);
+                if(PhoneNumberUtils.compare(phoneNumber, sender)) {
+                    //in case of the car app and the tracker app had the same phone number
+                    // the the private code message is resent to the same phone
+                    // so we ignore it with the following if statement
+                    if (!message.contains(privateCode)) {
+                        Coord coord = new Coord();
+                        coord.recup_coord(message);
+                        MainActivity.currTrackedCar.setLastLocationLat(coord.getLat());
+                        MainActivity.currTrackedCar.setLastLocationLng(coord.getLng());
+                        MainActivity.myCars.update(MainActivity.currTrackedCar);
+                    }
                 }
             }
         }
-
     }
+
 }

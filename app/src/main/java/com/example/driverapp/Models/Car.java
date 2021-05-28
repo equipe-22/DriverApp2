@@ -1,5 +1,6 @@
 package com.example.driverapp.Models;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 

@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,22 +11,14 @@ import android.view.ViewGroup;
 
 import com.example.driverapp.MainActivity;
 import com.example.driverapp.Models.Car;
-import com.example.driverapp.Models.Coord;
 import com.example.driverapp.R;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import org.jetbrains.annotations.NotNull;
 
 public class MapFragment extends Fragment {
 
@@ -59,10 +50,9 @@ public class MapFragment extends Fragment {
              -> the message is sent to the car phone number, and the sms Listener waits for the location sent over sms
              -> when we get the coordinates, we pin a (current_location_marker)
              */
-            if (MainActivity.currTrackedCar != null) {
-                if (MainActivity.currTrackedCar.getLastLocationLat() != null &&
-                        MainActivity.currTrackedCar.getLastLocationLng() != null) {
 
+            if (MainActivity.currTrackedCar != null) {
+                if (MainActivity.currTrackedCar.getLastLocationLat() != null && MainActivity.currTrackedCar.getLastLocationLng() != null) {
                     Car trackedCar = MainActivity.currTrackedCar;
                     LatLng latLng = new LatLng(trackedCar.getLastLocationLat(), trackedCar.getLastLocationLng()); //cord.lat et cord.lng contient les 2 coordonées
                     googleMap.addMarker(new MarkerOptions().position(latLng).title(trackedCar.getMarque() + " " + trackedCar.getModele()).icon(BitmapDescriptorFactory.fromResource(R.drawable.car_marker)));
@@ -72,7 +62,6 @@ public class MapFragment extends Fragment {
             }
         }
     };
-
 
     @Nullable
     @Override
@@ -84,9 +73,8 @@ public class MapFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-
         if (mapFragment != null) {
-                mapFragment.getMapAsync(callback);
+            mapFragment.getMapAsync(callback);
         }
     }
 }

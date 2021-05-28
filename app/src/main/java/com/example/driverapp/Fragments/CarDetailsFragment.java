@@ -24,8 +24,8 @@ public class CarDetailsFragment extends Fragment {
     View mfragment;
     Car thisCar;
 
-    public CarDetailsFragment(Car thisCar) {
-        this.thisCar = thisCar;
+    public CarDetailsFragment(Car car) {
+       thisCar = car;
     }
 
     @Override

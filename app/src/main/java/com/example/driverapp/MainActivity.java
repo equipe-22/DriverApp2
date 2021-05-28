@@ -1,6 +1,8 @@
 package com.example.driverapp;
 
 import android.Manifest;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -267,12 +269,31 @@ public class MainActivity extends AppCompatActivity {
                 }else {
                     if(currTrackedCar != null){
                         currTrackedCar.setLastTrackDate(new Date(System.currentTimeMillis()).toLocaleString());
-                        requestLocation();
+
+                        ProgressDialog dialog = ProgressDialog.show(MainActivity.this, "Message envoyé",
+                                "Localisation en cours. Veuillez patienter...", false);
+                        dialog.setIcon(R.drawable.ic_map2);
+                        requestLocationViaSMS();
+                        dimissAfterLocationSent(dialog);
                     }
                 }
             }
         });
 
+    }
+    private void dimissAfterLocationSent(ProgressDialog dialog) {
+        //dimissing the Progressdialog
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                while(currTrackedCar.getLastLocationLat() == null && currTrackedCar.getLastLocationLng() == null){
+                }
+                dialog.dismiss();
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
     }
     public void btmNavViewClicks(){
         btmNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -456,23 +477,21 @@ public class MainActivity extends AppCompatActivity {
             //Toast.makeText(this, "Failed to send message", Toast.LENGTH_SHORT).show();
         }
     }
-    //-------------------------------------
-    public void requestLocation(){
-    if(this.checkSelfPermission(Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+    public void requestLocationViaSMS(){
+        if(this.checkSelfPermission(Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
         Log.d("SendPosRequestFragment", "onClick: permission is granted");
 
         //on prend le numero et le code secret de la voiture selectionee a tracker
         String phoneNumber = currTrackedCar.getNumTele();
         String secretMessage = currTrackedCar.getCodeSecret();
-
-        sendSMS(phoneNumber, secretMessage);
-
+        sendSMS(phoneNumber, secretMessage+"sms");
         Log.d("SendPosRequestFragment", "onClick: message sent");
     }else{
         ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.SEND_SMS}, PackageManager.PERMISSION_GRANTED);
     }
-}
+    }
 
+    //finding Views
     private void findViews(){
           btmNavView =(BottomNavigationView) findViewById(R.id.bottomNavigationView);
           fab = (FloatingActionButton) findViewById(R.id.fab);
