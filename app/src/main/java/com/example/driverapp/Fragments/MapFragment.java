@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.example.driverapp.MainActivity;
 import com.example.driverapp.Models.Car;
@@ -22,20 +23,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapFragment extends Fragment {
 
+    ImageButton btnClrMarkers;
+
     public MapFragment(){
 
     }
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
-
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            //TODO: read the comments bellow
             /**
              * this map fragment is called in one of two manners
              * 1: if the user navigates to the map without selecting a car (directly from the btm menu)
@@ -50,9 +46,23 @@ public class MapFragment extends Fragment {
              -> the message is sent to the car phone number, and the sms Listener waits for the location sent over sms
              -> when we get the coordinates, we pin a (current_location_marker)
              */
+            addCurrentTrackedCarMarker(googleMap);
+            clearPreviousMarkers(googleMap);
+        }
 
+        public void clearPreviousMarkers(GoogleMap googleMap){
+            btnClrMarkers.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    googleMap.clear();
+                    addCurrentTrackedCarMarker(googleMap);
+                }
+            });
+        }
+        public void addCurrentTrackedCarMarker(GoogleMap googleMap){
             if (MainActivity.currTrackedCar != null) {
                 if (MainActivity.currTrackedCar.getLastLocationLat() != null && MainActivity.currTrackedCar.getLastLocationLng() != null) {
+
                     Car trackedCar = MainActivity.currTrackedCar;
                     LatLng latLng = new LatLng(trackedCar.getLastLocationLat(), trackedCar.getLastLocationLng()); //cord.lat et cord.lng contient les 2 coordonées
                     googleMap.addMarker(new MarkerOptions().position(latLng).title(trackedCar.getMarque() + " " + trackedCar.getModele()).icon(BitmapDescriptorFactory.fromResource(R.drawable.car_marker)));
@@ -61,20 +71,32 @@ public class MapFragment extends Fragment {
                 }
             }
         }
+
     };
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_map, container, false);
+        View v = inflater.inflate(R.layout.fragment_map, container, false);
+        btnClrMarkers = v.findViewById(R.id.clearMarkers);
+
+        return v;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        showCarCurrentLocation();
+    }
+
+
+    public void showCarCurrentLocation(){
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
         }
+    }
+    public void showCarPath(){
+
     }
 }

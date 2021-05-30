@@ -1,9 +1,6 @@
 package com.example.driverapp.Fragments;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,32 +8,26 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.driverapp.MainActivity;
 import com.example.driverapp.Models.Car;
-import com.example.driverapp.Models.CarViewModel;
 import com.example.driverapp.Models.RecyclerViewAdapter;
 import com.example.driverapp.R;
 import com.example.driverapp.Utils.RecyclerViewSwipeDecorator;
-import com.google.android.material.snackbar.Snackbar;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 import java.util.List;
-
-import static androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE;
 
 public class ListFragment extends Fragment {
     
@@ -132,6 +123,7 @@ public class ListFragment extends Fragment {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 
         }
+
     };
     public AlertDialog askToRemove(int pos, Car dltCar) {
 
@@ -143,6 +135,7 @@ public class ListFragment extends Fragment {
                 .setPositiveButton("OUI", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
+                        
                         //your deleting code
                         MainActivity.myCars.delete(adapter.carList.get(pos));
                         if (MainActivity.currTrackedCar == dltCar) MainActivity.currTrackedCar = null;

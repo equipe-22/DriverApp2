@@ -227,6 +227,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 MainActivity.currTrackedCar = carList.get(position);
                 mainActivity.setMapFragment();
                 mainActivity.btmNavView.setSelectedItemId(R.id.mapButton);
+//                MainActivity.mapFragment.showCarCurrentLocation();
             }
         });
         holder.localiserRacco.setOnClickListener(new View.OnClickListener() {
@@ -243,6 +244,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 MainActivity.currTrackedCar = carList.get(position);
                 mainActivity.setMapFragment();
                 mainActivity.btmNavView.setSelectedItemId(R.id.mapButton);
+//                MainActivity.mapFragment.showCarCurrentLocation();
+
             }
         });
     }

@@ -56,6 +56,8 @@ public class SmsListener extends BroadcastReceiver {
                         MainActivity.currTrackedCar.setLastLocationLat(coord.getLat());
                         MainActivity.currTrackedCar.setLastLocationLng(coord.getLng());
                         MainActivity.myCars.update(MainActivity.currTrackedCar);
+                        MainActivity.mapFragment.showCarCurrentLocation();
+                        MainActivity.locarionProgressDialog.dismiss();
                     }
                 }
             }

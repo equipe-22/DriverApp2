@@ -2,6 +2,7 @@ package com.example.driverapp;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -16,9 +17,11 @@ import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
@@ -49,7 +52,8 @@ import java.util.ListIterator;
 
 public class MainActivity extends AppCompatActivity {
 
-    public MapFragment mapFragment = new MapFragment();
+    public static MapFragment mapFragment = new MapFragment();
+    public static ProgressDialog locarionProgressDialog;
     public CarDetailsFragment carDetails;
     public Boolean isInHome;
 
@@ -270,31 +274,19 @@ public class MainActivity extends AppCompatActivity {
                     if(currTrackedCar != null){
                         currTrackedCar.setLastTrackDate(new Date(System.currentTimeMillis()).toLocaleString());
 
-                        ProgressDialog dialog = ProgressDialog.show(MainActivity.this, "Message envoyé",
+                        locarionProgressDialog = ProgressDialog.show(MainActivity.this, "Message envoyé",
                                 "Localisation en cours. Veuillez patienter...", false);
-                        dialog.setIcon(R.drawable.ic_map2);
+                        locarionProgressDialog.setIcon(R.drawable.ic_map2);
+//                        locarionProgressDialog.setCanceledOnTouchOutside(true);
                         requestLocationViaSMS();
-                        dimissAfterLocationSent(dialog);
+
                     }
                 }
             }
         });
-
     }
-    private void dimissAfterLocationSent(ProgressDialog dialog) {
-        //dimissing the Progressdialog
 
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                while(currTrackedCar.getLastLocationLat() == null && currTrackedCar.getLastLocationLng() == null){
-                }
-                dialog.dismiss();
-            }
-        };
-        Thread thread = new Thread(runnable);
-        thread.start();
-    }
+
     public void btmNavViewClicks(){
         btmNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
