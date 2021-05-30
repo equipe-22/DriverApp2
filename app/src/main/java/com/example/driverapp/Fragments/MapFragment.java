@@ -4,7 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +16,32 @@ import android.widget.ImageButton;
 import com.example.driverapp.MainActivity;
 import com.example.driverapp.Models.Car;
 import com.example.driverapp.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapFragment extends Fragment {
 
     ImageButton btnClrMarkers;
+    private GoogleMap mMap;
+    private Geocoder geocoder;
+    private int ACCESS_LOCATION_REQUEST_CODE = 10001;
+    FusedLocationProviderClient fusedLocationProviderClient;
+    LocationRequest locationRequest;
+
+    Marker userLocationMarker;
+    Circle userLocationAccuracyCircle;
 
     public MapFragment(){
 
@@ -46,6 +64,7 @@ public class MapFragment extends Fragment {
              -> the message is sent to the car phone number, and the sms Listener waits for the location sent over sms
              -> when we get the coordinates, we pin a (current_location_marker)
              */
+            mMap = googleMap;
             addCurrentTrackedCarMarker(googleMap);
             clearPreviousMarkers(googleMap);
         }
@@ -89,14 +108,52 @@ public class MapFragment extends Fragment {
         showCarCurrentLocation();
     }
 
-
     public void showCarCurrentLocation(){
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
+            geocoder = new Geocoder(getContext());
         }
     }
-    public void showCarPath(){
+
+    //from here i was working for
+
+    public void fetchCurrentCarLocation(){
 
     }
+
+    private void setUserLocationMarker(Location location) {
+
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+        if (userLocationMarker == null) {
+            //Create a new marker
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(latLng);
+            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.car_as_marker));
+            markerOptions.rotation(location.getBearing());
+            markerOptions.anchor((float) 0.5, (float) 0.5);
+            userLocationMarker = mMap.addMarker(markerOptions);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17));
+        } else  {
+            //use the previously created marker
+            userLocationMarker.setPosition(latLng);
+            userLocationMarker.setRotation(location.getBearing());
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17));
+        }
+
+        if (userLocationAccuracyCircle == null) {
+            CircleOptions circleOptions = new CircleOptions();
+            circleOptions.center(latLng);
+            circleOptions.strokeWidth(4);
+            circleOptions.strokeColor(R.color.violet);
+            circleOptions.fillColor(R.color.medium_grey);
+            circleOptions.radius(location.getAccuracy());
+            userLocationAccuracyCircle = mMap.addCircle(circleOptions);
+        } else {
+            userLocationAccuracyCircle.setCenter(latLng);
+            userLocationAccuracyCircle.setRadius(location.getAccuracy());
+        }
+    }
+
 }
