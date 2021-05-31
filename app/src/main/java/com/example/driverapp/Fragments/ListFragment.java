@@ -5,9 +5,12 @@ import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +30,7 @@ import com.example.driverapp.Utils.RecyclerViewSwipeDecorator;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class ListFragment extends Fragment {
@@ -35,9 +39,12 @@ public class ListFragment extends Fragment {
     private RecyclerViewAdapter adapter;
     MainActivity mainActivity;
     View thisFragment;
+    EditText searchEdt;
 
     public ListFragment(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
+        searchEdt = mainActivity.searchBar;
+
     }
     
     @Override
@@ -65,8 +72,9 @@ public class ListFragment extends Fragment {
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-
+        configureSearch();
     }
+
     //here swiping gestures are handled
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
         @Override
@@ -165,6 +173,24 @@ public class ListFragment extends Fragment {
                     mainActivity.setHomeFragment();
                     MainActivity.currTrackedCar = null;
                 }
+            }
+        });
+    }
+
+    public void configureSearch() {
+        searchEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.getFilter().filter(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
             }
         });
     }

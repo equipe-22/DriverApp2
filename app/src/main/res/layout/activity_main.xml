@@ -118,7 +118,7 @@
                 android:background="@drawable/search_bar_design"
                 android:enabled="true"
                 android:fontFamily="@font/montserrat_medium"
-                android:hint="Recherche .."
+                android:hint="Marque model..."
                 android:maxLines="1"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="10dp"

@@ -15,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +30,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.driverapp.Fragments.ListFragment;
 import com.example.driverapp.MainActivity;
 import com.example.driverapp.R;
 
@@ -37,12 +40,13 @@ import java.security.acl.Owner;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> implements Filterable {
 
     public List<Car> carList = new List<Car>(){
 
@@ -173,6 +177,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             return null;
         }
     };
+
+
     Context context;
     MainActivity mainActivity;
 
@@ -302,5 +308,40 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             });
 
         }
+    }
+
+    //filtering operation
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            HashMap<String, Car> allCars = new HashMap<String, Car>();
+            List<Car> filtredList = new ArrayList<>();
+
+            for (Car car: MainActivity.myCarsList) {
+                allCars.put(car.getMarque()+" "+car.getModele(), car);
+            }
+
+            for (String carName: allCars.keySet()) {
+                if (carName.toLowerCase().contains(constraint.toString().toLowerCase())) {
+                    filtredList.add(allCars.get(carName));
+                }
+            }
+
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filtredList;
+
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            setCars((List<Car>) results.values);
+
+        }
+    };
+
+    @Override
+    public Filter getFilter() {
+        return filter;
     }
 }

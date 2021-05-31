@@ -2,8 +2,6 @@ package com.example.driverapp;
 
 import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -17,11 +15,9 @@ import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
@@ -34,7 +30,6 @@ import com.example.driverapp.Fragments.CarDetailsFragment;
 import com.example.driverapp.Fragments.EmptyStateFragment;
 import com.example.driverapp.Fragments.ListFragment;
 import com.example.driverapp.Fragments.MapFragment;
-import com.example.driverapp.Fragments.SearchFragment;
 import com.example.driverapp.Fragments.addCar.formFragment;
 import com.example.driverapp.Models.Car;
 import com.example.driverapp.Models.CarViewModel;
@@ -56,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     public static ProgressDialog locarionProgressDialog;
     public CarDetailsFragment carDetails;
     public Boolean isInHome;
+    public EditText searchBar;
 
     //UI
     public BottomNavigationView btmNavView;
@@ -286,7 +282,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     public void btmNavViewClicks(){
         btmNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -333,7 +328,6 @@ public class MainActivity extends AppCompatActivity {
         ConstraintLayout topAppBar= (ConstraintLayout) findViewById(R.id.top_app_bar);
         RelativeLayout userIcon = (RelativeLayout) findViewById(R.id.userBtn);
         ImageButton cancelBtn = (ImageButton) findViewById(R.id.cansel_btn);
-        EditText searchBar = (EditText) findViewById(R.id.editText_search);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -344,10 +338,6 @@ public class MainActivity extends AppCompatActivity {
                 animSearchAppaire(searchBar, topAppBar);
                 searchBar.setVisibility(View.VISIBLE);
                 searchBar.setWidth(topAppBar.getWidth()-80);
-
-                // change the fragment
-                Fragment fragment = new SearchFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,fragment).commit();
             }
         });
     }
@@ -367,7 +357,7 @@ public class MainActivity extends AppCompatActivity {
                 searchBar.setVisibility(View.GONE);
                 animSearchDisappaire(searchBar, topAppBar);
                 searchBar.setWidth(0);
-                // change the fragment
+//                change the fragment
                 setHomeFragment();
             }
         });
@@ -446,6 +436,7 @@ public class MainActivity extends AppCompatActivity {
         logout.setVisibility( View.VISIBLE );
 
     }
+
     public void animSearchAppaire (EditText searchbar, ConstraintLayout topAppBar) {
         Animation animation = new TranslateAnimation( topAppBar.getWidth() +80, 0,0, 0);
         animation.setDuration(700);
@@ -490,7 +481,8 @@ public class MainActivity extends AppCompatActivity {
           profil= (ImageButton) findViewById(R.id.user);
           settings =(ImageButton) findViewById(R.id.settings);
          info =(ImageButton) findViewById(R.id.info);
-        logout= (ImageButton) findViewById(R.id.logout);
-        appBar =(AppBarLayout) findViewById(R.id.appBar);
+         logout= (ImageButton) findViewById(R.id.logout);
+         appBar =(AppBarLayout) findViewById(R.id.appBar);
+        searchBar = (EditText) findViewById(R.id.editText_search);
     }
 }
