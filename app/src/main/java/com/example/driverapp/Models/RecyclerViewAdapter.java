@@ -31,6 +31,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.driverapp.Fragments.ListFragment;
+import com.example.driverapp.Fragments.MapFragment;
 import com.example.driverapp.MainActivity;
 import com.example.driverapp.R;
 
@@ -233,6 +234,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 MainActivity.currTrackedCar = carList.get(position);
                 mainActivity.setMapFragment();
                 mainActivity.btmNavView.setSelectedItemId(R.id.mapButton);
+                if(MainActivity.currTrackedCar.getLastLocationLat() == null || MainActivity.currTrackedCar.getLastLocationLng() == null){
+                    MainActivity.mapFragment = new MapFragment();
+                    mainActivity.setMapFragment();
+                }
+
 //                MainActivity.mapFragment.showCarCurrentLocation();
             }
         });
@@ -250,6 +256,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 MainActivity.currTrackedCar = carList.get(position);
                 mainActivity.setMapFragment();
                 mainActivity.btmNavView.setSelectedItemId(R.id.mapButton);
+                if(MainActivity.currTrackedCar.getLastLocationLat() == null || MainActivity.currTrackedCar.getLastLocationLng() == null){
+                    MainActivity.mapFragment = new MapFragment();
+                    mainActivity.setMapFragment();
+                }
 //                MainActivity.mapFragment.showCarCurrentLocation();
 
             }

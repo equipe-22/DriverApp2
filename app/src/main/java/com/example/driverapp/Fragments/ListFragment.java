@@ -106,6 +106,10 @@ public class ListFragment extends Fragment {
                     MainActivity.currTrackedCar = selectedCar;
                     mainActivity.setMapFragment();
                     mainActivity.btmNavView.setSelectedItemId(R.id.mapButton);
+                    if(MainActivity.currTrackedCar.getLastLocationLat() == null || MainActivity.currTrackedCar.getLastLocationLng() == null){
+                        MainActivity.mapFragment = new MapFragment();
+                        mainActivity.setMapFragment();
+                    }
                     break;
 
             }
