@@ -43,7 +43,17 @@ public class formFragment extends BottomSheetDialogFragment implements Parcelabl
             return new formFragment[size];
         }
     };
+    @Override
+    public int getTheme() {
+        return R.style.BottomSheetDialogTheme;
+    }
 
+    @Nullable
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public Dialog getDialog() {
+        return new BottomSheetDialog(requireContext(),getTheme());
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

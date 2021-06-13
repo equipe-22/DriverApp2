@@ -14,7 +14,6 @@
         <!-- Customize your theme here. -->
     </style>
 
-
     <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bottom_sheet_background</item>
     </style>

@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="3dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
@@ -74,7 +74,7 @@
                     android:backgroundTint="@color/white"
                     android:paddingHorizontal="4dp"
                     android:paddingVertical="4dp"
-                    android:src="@drawable/ic_map3"
+                    android:src="@drawable/ic_map"
                     android:tint="@color/violet"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -92,15 +92,16 @@
 
                 <RelativeLayout
                     android:id="@+id/bloc1"
-                    android:layout_width="188dp"
-                    android:layout_height="132dp"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/bloc2"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:id="@+id/key_matricule"
-                        android:layout_width="75dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
@@ -110,12 +111,12 @@
                         android:layout_toStartOf="@+id/value_matricule"
                         android:fontFamily="@font/montserrat_semibold"
                         android:text="matricule"
-                        android:textSize="12sp"
+                        android:textSize="11sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/value_matricule"
-                        android:layout_width="127dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/key_matricule"
                         android:layout_alignStart="@+id/value_code_secret"
@@ -123,7 +124,7 @@
                         android:layout_marginEnd="2dp"
                         android:fontFamily="@font/montserrat_medium"
                         android:text="00513 111 39"
-                        android:textSize="12sp" />
+                        android:textSize="11sp" />
 
                     <TextView
                         android:id="@+id/key_code_secret"
@@ -134,12 +135,12 @@
                         android:fontFamily="@font/montserrat_semibold"
                         android:text="code secret"
                         android:textAlignment="center"
-                        android:textSize="12sp"
+                        android:textSize="11sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/value_code_secret"
-                        android:layout_width="118dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/key_code_secret"
                         android:layout_alignParentEnd="true"
@@ -150,20 +151,15 @@
                         android:fontFamily="@font/montserrat_medium"
                         android:text="Hy_9T@Ou"
                         android:textAlignment="textStart"
-                        android:textSize="12sp" />
+                        android:textSize="11sp" />
 
                     <Button
                         android:id="@+id/localiser_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/key_code_secret"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="19dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="9dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_centerHorizontal="true"
                         android:backgroundTint="@color/violet"
                         android:drawableEnd="@drawable/ic_map2"
                         android:drawableTint="@color/white"
@@ -175,12 +171,14 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_width="164dp"
-                    android:layout_height="129dp"
+                    android:id="@+id/bloc2"
+                    android:layout_width="140dp"
+                    android:layout_height="match_parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/bloc1"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0">
 
                     <ImageView
                         android:id="@+id/car_illustration"
@@ -193,14 +191,11 @@
 
                     <TextView
                         android:id="@+id/key_num_tele"
-                        android:layout_width="match_parent"
-                        android:layout_height="27dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_below="@id/car_illustration"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginStart="0dp"
+                        android:layout_centerHorizontal="true"
                         android:layout_marginTop="8dp"
-                        android:layout_marginEnd="0dp"
                         android:fontFamily="@font/montserrat_semibold"
                         android:text="numéro de téléphone"
                         android:textAlignment="center"
@@ -209,19 +204,38 @@
 
                     <TextView
                         android:id="@+id/value_num_tele"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/key_num_tele"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginStart="0dp"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginEnd="0dp"
+                        android:layout_centerHorizontal="true"
                         android:fontFamily="@font/montserrat_medium"
                         android:text="056 83 23 17"
                         android:textAlignment="center"
                         android:textColor="@color/medium_grey"
-                        android:textSize="15sp" />
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/activate_4g_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/value_num_tele"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Track en continue"
+                        android:textSize="10dp" />
+
+                    <Switch
+                        android:id="@+id/enable_4g"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/activate_4g_title"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="20dp"
+                        />
 
                 </RelativeLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>

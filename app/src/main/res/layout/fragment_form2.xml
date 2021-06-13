@@ -112,6 +112,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
+                android:height="100dp"
                 android:id="@+id/private_code_errors"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -136,7 +137,7 @@
             <Button
                 android:id="@+id/annuler"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="40dp"
                 android:backgroundTint="@android:color/transparent"
                 android:textSize="10sp"
@@ -148,13 +149,15 @@
                 app:strokeWidth="1dp"
                 style="?attr/materialButtonOutlinedStyle"
                 app:cornerRadius="6dp"
+                android:fontFamily="@font/montserrat_semibold"
                 />
 
 
             <Button
                 android:id="@+id/suivant"
+                android:fontFamily="@font/montserrat_semibold"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:backgroundTint="@color/violet"
                 android:text="@string/suivant"
