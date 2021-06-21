@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.telephony.SmsManager;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.Log;
@@ -15,9 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,135 +52,7 @@ import java.util.ListIterator;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> implements Filterable {
 
-    public List<Car> carList = new List<Car>(){
-
-        @Override
-        public int size() {
-            return 0;
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return false;
-        }
-
-        @Override
-        public boolean contains(@Nullable @org.jetbrains.annotations.Nullable Object o) {
-            return false;
-        }
-
-        @NonNull
-        @NotNull
-        @Override
-        public Iterator<Car> iterator() {
-            return null;
-        }
-
-        @NonNull
-        @NotNull
-        @Override
-        public Object[] toArray() {
-            return new Object[0];
-        }
-
-        @NonNull
-        @NotNull
-        @Override
-        public <T> T[] toArray(@NonNull @NotNull T[] a) {
-            return null;
-        }
-
-        @Override
-        public boolean add(Car car) {
-            return false;
-        }
-
-        @Override
-        public boolean remove(@Nullable @org.jetbrains.annotations.Nullable Object o) {
-            return false;
-        }
-
-        @Override
-        public boolean containsAll(@NonNull @NotNull Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public boolean addAll(@NonNull @NotNull Collection<? extends Car> c) {
-            return false;
-        }
-
-        @Override
-        public boolean addAll(int index, @NonNull @NotNull Collection<? extends Car> c) {
-            return false;
-        }
-
-        @Override
-        public boolean removeAll(@NonNull @NotNull Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public boolean retainAll(@NonNull @NotNull Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public void clear() {
-
-        }
-
-        @Override
-        public Car get(int index) {
-            return null;
-        }
-
-        @Override
-        public Car set(int index, Car element) {
-            return null;
-        }
-
-        @Override
-        public void add(int index, Car element) {
-
-        }
-
-        @Override
-        public Car remove(int index) {
-            return null;
-        }
-
-        @Override
-        public int indexOf(@Nullable @org.jetbrains.annotations.Nullable Object o) {
-            return 0;
-        }
-
-        @Override
-        public int lastIndexOf(@Nullable @org.jetbrains.annotations.Nullable Object o) {
-            return 0;
-        }
-
-        @NonNull
-        @NotNull
-        @Override
-        public ListIterator<Car> listIterator() {
-            return null;
-        }
-
-        @NonNull
-        @NotNull
-        @Override
-        public ListIterator<Car> listIterator(int index) {
-            return null;
-        }
-
-        @NonNull
-        @NotNull
-        @Override
-        public List<Car> subList(int fromIndex, int toIndex) {
-            return null;
-        }
-    };
+    public List<Car> carList = new ArrayList<Car>();
 
 
     Context context;
@@ -264,6 +139,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             }
         });
+        holder.enable4g.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    MainActivity.currTrackedCar = carList.get(position);
+                    sendSMS( MainActivity.currTrackedCar.getNumTele(),
+                            MainActivity.currTrackedCar.getCodeSecret() + "enable4g");
+
+                    Toast.makeText(context, "Position Collection with 4G Enabled", Toast.LENGTH_LONG).show();
+
+                }else{
+                    sendSMS( MainActivity.currTrackedCar.getNumTele(),
+                            MainActivity.currTrackedCar.getCodeSecret() + "disable4g");
+                    Toast.makeText(context, "Position Collection with 4G Disabled", Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
     }
 
     @Override
@@ -282,6 +175,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ImageButton localiserRacco;
         TextView letter;
         TextView smallPhoneNumber;
+        Switch enable4g;
 
 
         public MyViewHolder(@NonNull View itemView) {
@@ -296,6 +190,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             localiserRacco = itemView.findViewById(R.id.locate_racco);
             letter = itemView.findViewById(R.id.letter);
             smallPhoneNumber = itemView.findViewById(R.id.small_phoneNumber);
+            enable4g = itemView.findViewById(R.id.enable_4g);
 
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -353,5 +248,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public Filter getFilter() {
         return filter;
+    }
+
+    public void sendSMS(String phoneNo,String SMS ) {
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNo, null, SMS, null, null);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            //Toast.makeText(this, "Failed to send message", Toast.LENGTH_SHORT).show();
+        }
     }
 }

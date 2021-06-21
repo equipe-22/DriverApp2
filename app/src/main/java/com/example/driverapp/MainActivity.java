@@ -39,6 +39,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -64,135 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     //those attributes are Static, the app should only use those (you shouldn't instantiate ViewModel elsewhere forexample)
     public static CarViewModel myCars ;
-    public static List<Car> myCarsList = new List<Car>(){
-
-        @Override
-        public int size() {
-            return 0;
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return false;
-        }
-
-        @Override
-        public boolean contains(@Nullable @org.jetbrains.annotations.Nullable Object o) {
-            return false;
-        }
-
-        @NonNull
-        @NotNull
-        @Override
-        public Iterator<Car> iterator() {
-            return null;
-        }
-
-        @NonNull
-        @NotNull
-        @Override
-        public Object[] toArray() {
-            return new Object[0];
-        }
-
-        @NonNull
-        @NotNull
-        @Override
-        public <T> T[] toArray(@NonNull @NotNull T[] a) {
-            return null;
-        }
-
-        @Override
-        public boolean add(Car car) {
-            return false;
-        }
-
-        @Override
-        public boolean remove(@Nullable @org.jetbrains.annotations.Nullable Object o) {
-            return false;
-        }
-
-        @Override
-        public boolean containsAll(@NonNull @NotNull Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public boolean addAll(@NonNull @NotNull Collection<? extends Car> c) {
-            return false;
-        }
-
-        @Override
-        public boolean addAll(int index, @NonNull @NotNull Collection<? extends Car> c) {
-            return false;
-        }
-
-        @Override
-        public boolean removeAll(@NonNull @NotNull Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public boolean retainAll(@NonNull @NotNull Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public void clear() {
-
-        }
-
-        @Override
-        public Car get(int index) {
-            return null;
-        }
-
-        @Override
-        public Car set(int index, Car element) {
-            return null;
-        }
-
-        @Override
-        public void add(int index, Car element) {
-
-        }
-
-        @Override
-        public Car remove(int index) {
-            return null;
-        }
-
-        @Override
-        public int indexOf(@Nullable @org.jetbrains.annotations.Nullable Object o) {
-            return 0;
-        }
-
-        @Override
-        public int lastIndexOf(@Nullable @org.jetbrains.annotations.Nullable Object o) {
-            return 0;
-        }
-
-        @NonNull
-        @NotNull
-        @Override
-        public ListIterator<Car> listIterator() {
-            return null;
-        }
-
-        @NonNull
-        @NotNull
-        @Override
-        public ListIterator<Car> listIterator(int index) {
-            return null;
-        }
-
-        @NonNull
-        @NotNull
-        @Override
-        public List<Car> subList(int fromIndex, int toIndex) {
-            return null;
-        }
-    };
+    public static List<Car> myCarsList = new ArrayList<Car>();
     public static Car currTrackedCar;
 
     @Override
