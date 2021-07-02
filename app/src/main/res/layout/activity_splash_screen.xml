@@ -21,23 +21,9 @@
             android:id="@+id/logo"
             android:layout_width="wrap_content"
             android:layout_height="70dp"
-
             android:src="@drawable/ic_logo"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="31dp"
-            android:layout_marginBottom="10dp"/>
-
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/name_app"
-            android:textSize="20sp"
-            android:textColor="@color/violet"
-            android:fontFamily="@font/montserrat_bold"
-            android:layout_gravity="center"
             />
+
 
     </LinearLayout>
 

@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="0dp"
-        app:cardUseCompatPadding="true">
-
-        <LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="2dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="0dp"
+    app:cardUseCompatPadding="true"
+    android:id="@+id/cardView"
+    >
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/part1"
+                >
 
                 <TextView
                     android:id="@+id/letter"
@@ -88,16 +89,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/part1"
+                android:layout_margin="0dp"
+                >
 
                 <RelativeLayout
                     android:id="@+id/bloc1"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/bloc2"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginHorizontal="20dp"
+                    >
 
                     <TextView
                         android:id="@+id/key_matricule"
@@ -120,7 +128,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/key_matricule"
                         android:layout_alignStart="@+id/value_code_secret"
-                        android:layout_alignParentEnd="true"
                         android:layout_marginEnd="2dp"
                         android:fontFamily="@font/montserrat_medium"
                         android:text="00513 111 39"
@@ -143,7 +150,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/key_code_secret"
-                        android:layout_alignParentEnd="true"
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginEnd="1dp"
@@ -172,13 +178,14 @@
 
                 <RelativeLayout
                     android:id="@+id/bloc2"
-                    android:layout_width="140dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/bloc1"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0">
+                    android:layout_marginHorizontal="20dp"
+                    >
 
                     <ImageView
                         android:id="@+id/car_illustration"
@@ -207,12 +214,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/key_num_tele"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerHorizontal="true"
                         android:fontFamily="@font/montserrat_medium"
                         android:text="056 83 23 17"
-                        android:textAlignment="center"
+                        android:layout_centerHorizontal="true"
                         android:textColor="@color/medium_grey"
                         android:textSize="13sp" />
 
@@ -235,12 +239,14 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="2dp"
                         android:layout_marginBottom="20dp"
+                        android:text="4G"
+                        android:textColor="@color/medium_grey"
+                        android:fontFamily="@font/montserrat_bold"
                         />
 
                 </RelativeLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-</RelativeLayout>

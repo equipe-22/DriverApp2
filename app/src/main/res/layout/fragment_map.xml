@@ -24,10 +24,10 @@
         android:elevation="10dp"
         app:fabSize="mini"
         android:scaleType="center"
-        android:src="@drawable/ic_marker_clear"
+        android:src="@drawable/ic_map"
         app:borderWidth="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/black" />
+        app:tint="@color/dark_grey" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
