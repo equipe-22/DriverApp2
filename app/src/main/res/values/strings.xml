@@ -25,4 +25,5 @@
     <string name="location_section">location section</string>
     <string name="enter_mobile">Enter mobile number</string>
     <string name="title_activity_maps">Map</string>
+    <string name="name_app">CAR TRACKER</string>
 </resources>
