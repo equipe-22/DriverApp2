@@ -72,6 +72,12 @@ public class MainActivity extends AppCompatActivity {
     public static List<Car> myCarsList = new ArrayList<Car>();
     public static Car currTrackedCar;
 
+    //broadcast elements
+    SmsListener smsListener = new SmsListener();
+    IntentFilter intentFilter = new IntentFilter();
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +113,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(smsListener);
+    }
+
     //setting main fragments
     public void setHomeFragment() {
         //set the btm UI
@@ -154,10 +167,7 @@ public class MainActivity extends AppCompatActivity {
 //                        locarionProgressDialog.setCanceledOnTouchOutside(true);
                         requestLocationViaSMS();
 
-                        SmsListener smsListener = new SmsListener();
-                        IntentFilter intentFilter = new IntentFilter();
                         intentFilter.addAction("android.provider.Telephony.SMS_RECEIVED");
-
                         registerReceiver(smsListener, intentFilter);
 
                     }
@@ -222,6 +232,7 @@ public class MainActivity extends AppCompatActivity {
                 animSearchAppaire(searchBar, topAppBar);
                 searchBar.setVisibility(View.VISIBLE);
                 searchBar.setWidth(topAppBar.getWidth()-80);
+
             }
         });
     }
