@@ -18,13 +18,11 @@ public interface CarDao {
     @Update
     void update (Car car);
 
-//    @Query("DELETE FROM car_table WHERE id = :carID")
     @Delete
     void delete (Car car);
 
     @Query("SELECT * FROM car_table ORDER BY marque")
     LiveData<List<Car>> getAllCars ();
 
-//    @Query("SELECT * FROM car_table ORDER BY modele")
-//    List<Car> getCarList ();
+
 }

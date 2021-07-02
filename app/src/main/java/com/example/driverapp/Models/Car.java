@@ -19,15 +19,17 @@ public class Car implements Serializable {
     private String lastTrackDate ;
     private Double lastLocationLng;
     private Double lastLocationLat;
+    private boolean switchState;
 
 
 
-    public Car(String marque, String modele, String matricule, String codeSecret, String numTele) {
+    public Car(String marque, String modele, String matricule, String codeSecret, String numTele, boolean switchState) {
         this.marque = marque;
         this.modele = modele;
         this.matricule = matricule;
         this.codeSecret = codeSecret;
         this.numTele = numTele;
+        this.switchState = switchState;
     }
 
     public Car(String [] carData) {
@@ -123,4 +125,13 @@ public class Car implements Serializable {
     public void setLastLocationLat(Double lastLocationLat) {
         this.lastLocationLat = lastLocationLat;
     }
+
+    public boolean getSwitchState() {
+        return switchState;
+    }
+
+    public void setSwitchState(boolean switchState) {
+        this.switchState = switchState;
+    }
 }
+

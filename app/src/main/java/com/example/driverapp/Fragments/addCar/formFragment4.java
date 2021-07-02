@@ -97,7 +97,7 @@ public class formFragment4 extends Fragment {
             @Override
             public void onClick(View v) {
                 MainActivity.myCars.insert(new Car(formFragment.marque, formFragment.model, formFragment.matricul,
-                        formFragment.codeSecret, formFragment.phoneNumber));
+                        formFragment.codeSecret, formFragment.phoneNumber, false));
                 bottomSheetFragment.dismiss();
                 startActivity(new Intent(getContext(),MainActivity.class));
             }

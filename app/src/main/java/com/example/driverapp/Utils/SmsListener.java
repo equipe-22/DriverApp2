@@ -50,6 +50,7 @@ public class SmsListener extends BroadcastReceiver {
                     //in case of the car app and the tracker app had the same phone number
                     // the the private code message is resent to the same phone
                     // so we ignore it with the following if statement
+                    // TODO questionable condition statement
                     if (!message.contains(privateCode)) {
                         Coord coord = new Coord();
                         coord.recup_coord(message);

@@ -2,6 +2,8 @@ package com.example.driverapp;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -33,6 +35,7 @@ import com.example.driverapp.Fragments.MapFragment;
 import com.example.driverapp.Fragments.addCar.formFragment;
 import com.example.driverapp.Models.Car;
 import com.example.driverapp.Models.CarViewModel;
+import com.example.driverapp.Utils.SmsListener;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -47,6 +50,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class MainActivity extends AppCompatActivity {
+
 
     public static MapFragment mapFragment = new MapFragment();
     public static ProgressDialog locarionProgressDialog;
@@ -108,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         //set the btm UI
         fab.setImageResource(R.drawable.ic_add);
         //set the fragments
-        updateCarsList();
+
         if(myCarsList.isEmpty()) {
             EmptyStateFragment fragment = new EmptyStateFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment,"Empty").commit();
@@ -146,8 +150,15 @@ public class MainActivity extends AppCompatActivity {
                         locarionProgressDialog = ProgressDialog.show(MainActivity.this, "Message envoyé",
                                 "Localisation en cours. Veuillez patienter...", false);
                         locarionProgressDialog.setIcon(R.drawable.ic_map2);
+
 //                        locarionProgressDialog.setCanceledOnTouchOutside(true);
                         requestLocationViaSMS();
+
+                        SmsListener smsListener = new SmsListener();
+                        IntentFilter intentFilter = new IntentFilter();
+                        intentFilter.addAction("android.provider.Telephony.SMS_RECEIVED");
+
+                        registerReceiver(smsListener, intentFilter);
 
                     }
                 }

@@ -139,22 +139,31 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             }
         });
+
+        holder.enable4g.setChecked(carList.get(position).getSwitchState());
         holder.enable4g.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Car car = carList.get(position);
                 if (isChecked){
-                    MainActivity.currTrackedCar = carList.get(position);
-                    sendSMS( MainActivity.currTrackedCar.getNumTele(),
-                            MainActivity.currTrackedCar.getCodeSecret() + "enable4g");
+
+                    sendSMS( car.getNumTele(),
+                            car.getCodeSecret() + "enable4g");
+
+                    car.setSwitchState(true);
 
                     Toast.makeText(context, "Position Collection with 4G Enabled", Toast.LENGTH_LONG).show();
-
                 }else{
-                    sendSMS( MainActivity.currTrackedCar.getNumTele(),
-                            MainActivity.currTrackedCar.getCodeSecret() + "disable4g");
-                    Toast.makeText(context, "Position Collection with 4G Disabled", Toast.LENGTH_LONG).show();
 
+                    sendSMS( car.getNumTele(),
+                            car.getCodeSecret() + "disable4g");
+
+                    car.setSwitchState(false);
+
+                    Toast.makeText(context, "Position Collection with 4G Disabled", Toast.LENGTH_LONG).show();
                 }
+
+                MainActivity.myCars.update(car);
             }
         });
     }
