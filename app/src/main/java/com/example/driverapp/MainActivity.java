@@ -43,6 +43,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -171,8 +172,7 @@ public class MainActivity extends AppCompatActivity {
                     bottomSheetFragment.show( getSupportFragmentManager(), bottomSheetFragment.getTag());
                 }else {
                     if(currTrackedCar != null){
-                        currTrackedCar.setLastTrackDate(new Date(System.currentTimeMillis()).toLocaleString());
-
+                        currTrackedCar.updateLastTrackDate();
                         locarionProgressDialog = ProgressDialog.show(MainActivity.this, "Message envoyé",
                                 "Localisation en cours. Veuillez patienter...", false);
                         locarionProgressDialog.setIcon(R.drawable.ic_map2);

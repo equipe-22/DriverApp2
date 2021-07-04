@@ -101,7 +101,7 @@ public class ListFragment extends Fragment {
                     quand on click sur le button curseur (in center) sur la map
                     */
                     if (selectedCar.getLastTrackDate() == null){
-                        selectedCar.setLastTrackDate(new Date(System.currentTimeMillis()).toLocaleString());
+                        selectedCar.updateLastTrackDate();
                     }
                     MainActivity.currTrackedCar = selectedCar;
                     mainActivity.setMapFragment();
@@ -137,6 +137,7 @@ public class ListFragment extends Fragment {
         }
 
     };
+
     public AlertDialog askToRemove(int pos, Car dltCar) {
 
         return new AlertDialog.Builder(getContext())

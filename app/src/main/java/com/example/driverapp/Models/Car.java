@@ -5,6 +5,9 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 @Entity (tableName = "car_table")
 public class Car implements Serializable {
@@ -73,6 +76,10 @@ public class Car implements Serializable {
         return matricule;
     }
 
+    public void setLastTrackDate(String lastTrackDate) {
+        this.lastTrackDate = lastTrackDate;
+    }
+
     public void setMatricule(String matricule) {
         this.matricule = matricule;
     }
@@ -105,11 +112,11 @@ public class Car implements Serializable {
         return lastTrackDate;
     }
 
-    public void setLastTrackDate(String lastTrackDate) {
-        this.lastTrackDate = lastTrackDate;
+    public void updateLastTrackDate() {
+        Date currentTime = Calendar.getInstance().getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy/HH/mm");
+        this.lastTrackDate = dateFormat.format(currentTime);
     }
-
-
     public Double getLastLocationLng() {
         return lastLocationLng;
     }

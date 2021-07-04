@@ -52,9 +52,6 @@ public class formFragment1 extends Fragment {
         if (bundle != null) {
             bottomSheetFragment = bundle.getParcelable("this"); // Key
         }
-
-
-
     }
 
     @Override

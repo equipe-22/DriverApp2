@@ -103,7 +103,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 quand on click sur le button curseur (in center) sur la map
                 */
                 if (carList.get(position).getLastTrackDate() == null){
-                    carList.get(position).setLastTrackDate(new Date(System.currentTimeMillis()).toLocaleString());
+                    carList.get(position).updateLastTrackDate();
                 }
 
                 MainActivity.currTrackedCar = carList.get(position);
@@ -126,7 +126,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 quand on click sur le button curseur (in center) sur la map
                 */
                 if (carList.get(position).getLastTrackDate() == null){
-                    carList.get(position).setLastTrackDate(new Date(System.currentTimeMillis()).toLocaleString());
+                    carList.get(position).updateLastTrackDate();
+
                 }
                 MainActivity.currTrackedCar = carList.get(position);
                 mainActivity.setMapFragment();
