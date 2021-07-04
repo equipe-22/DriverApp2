@@ -71,6 +71,8 @@ public class QrCodeFragment extends DialogFragment {
 
     private void addCar(String carDataStr) {
         String[] data = carDataStr.split(" ; ");
+        Car car = new Car(data);
+        car.setSwitchState(false);
         MainActivity.myCars.insert(new Car(data));
         //back to main activity (Home)
         startActivity(new Intent(getContext(),MainActivity.class));

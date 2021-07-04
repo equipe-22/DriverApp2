@@ -135,7 +135,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     MainActivity.mapFragment = new MapFragment();
                     mainActivity.setMapFragment();
                 }
-//                MainActivity.mapFragment.showCarCurrentLocation();
 
             }
         });
@@ -266,7 +265,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         } catch (Exception e) {
             e.printStackTrace();
-            //Toast.makeText(this, "Failed to send message", Toast.LENGTH_SHORT).show();
         }
     }
 }

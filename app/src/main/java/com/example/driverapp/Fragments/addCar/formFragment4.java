@@ -99,7 +99,10 @@ public class formFragment4 extends Fragment {
                 MainActivity.myCars.insert(new Car(formFragment.marque, formFragment.model, formFragment.matricul,
                         formFragment.codeSecret, formFragment.phoneNumber, false));
                 bottomSheetFragment.dismiss();
-                startActivity(new Intent(getContext(),MainActivity.class));
+                Intent intent = new Intent(getContext(),MainActivity.class);
+
+                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
     }

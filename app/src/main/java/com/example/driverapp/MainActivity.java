@@ -117,7 +117,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(smsListener);
+        try {
+            unregisterReceiver(smsListener);
+        }catch (IllegalArgumentException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
     }
 
     //setting main fragments
@@ -142,7 +152,10 @@ public class MainActivity extends AppCompatActivity {
         fab.setImageResource(R.drawable.ic_cursor_outline);
 
         //set the fragment
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, mapFragment, "map").addToBackStack("map").commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, mapFragment, "map")
+                .disallowAddToBackStack()
+                .commit();
         if(currTrackedCar != null) showCarDetails(currTrackedCar);
         isInHome = false;
         appBar.setVisibility(View.INVISIBLE);
