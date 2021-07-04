@@ -56,15 +56,6 @@ public class CarDetailsFragment extends Fragment {
         carName.setText(thisCar.getMarque()+ " "+thisCar.getModele());
         carPhone.setText(thisCar.getNumTele());
 
-//        SimpleDateFormat fd = new SimpleDateFormat("dd. MM. yyyy");
-//        SimpleDateFormat fh = new SimpleDateFormat("HH");
-//        SimpleDateFormat fm = new SimpleDateFormat("mm");
-
-//
-//        date.setText(fd.format(Date.parse(thisCar.getLastTrackDate())));
-//        hour.setText(fh.format(Date.parse(thisCar.getLastTrackDate())));
-//        minute.setText(fm.format(Date.parse(thisCar.getLastTrackDate())));
-
         String[] dateAttrs = thisCar.getLastTrackDate().split("/");
         date.setText(dateAttrs[0]+". "+dateAttrs[1]+". "+dateAttrs[2]);
         hour.setText(dateAttrs[3]);
