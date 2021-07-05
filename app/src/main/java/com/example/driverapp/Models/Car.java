@@ -76,10 +76,6 @@ public class Car implements Serializable {
         return matricule;
     }
 
-    public void setLastTrackDate(String lastTrackDate) {
-        this.lastTrackDate = lastTrackDate;
-    }
-
     public void setMatricule(String matricule) {
         this.matricule = matricule;
     }
@@ -106,6 +102,10 @@ public class Car implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setLastTrackDate(String lastTrackDate) {
+        this.lastTrackDate = lastTrackDate;
     }
 
     public String getLastTrackDate() {

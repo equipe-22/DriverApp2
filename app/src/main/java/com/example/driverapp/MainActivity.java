@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         btmNavViewClicks();
         searchBtnClick();
         cancelSearchClick();
-        profilAnim();
+//        profilAnim();
     }
 
     @Override
@@ -233,13 +233,13 @@ public class MainActivity extends AppCompatActivity {
     public void searchBtnClick(){
         ImageButton search = (ImageButton) findViewById(R.id.search_btn);
         ConstraintLayout topAppBar= (ConstraintLayout) findViewById(R.id.top_app_bar);
-        RelativeLayout userIcon = (RelativeLayout) findViewById(R.id.userBtn);
+//        RelativeLayout userIcon = (RelativeLayout) findViewById(R.id.userBtn);
         ImageButton cancelBtn = (ImageButton) findViewById(R.id.cansel_btn);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TransitionManager.beginDelayedTransition(topAppBar,new AutoTransition());
-                userIcon.setVisibility(View.GONE);
+//                userIcon.setVisibility(View.GONE);
                 search.setVisibility(View.GONE);
                 cancelBtn.setVisibility(View.VISIBLE);
                 animSearchAppaire(searchBar, topAppBar);
@@ -253,13 +253,13 @@ public class MainActivity extends AppCompatActivity {
         ImageButton cancelBtn = (ImageButton) findViewById(R.id.cansel_btn);
         ImageButton search = (ImageButton) findViewById(R.id.search_btn);
         ConstraintLayout topAppBar= (ConstraintLayout) findViewById(R.id.top_app_bar);
-        RelativeLayout userIcon = (RelativeLayout) findViewById(R.id.userBtn);
+//        RelativeLayout userIcon = (RelativeLayout) findViewById(R.id.userBtn);
         EditText searchBar = (EditText) findViewById(R.id.editText_search);
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TransitionManager.beginDelayedTransition(topAppBar,new AutoTransition());
-                userIcon.setVisibility(View.VISIBLE);
+//                userIcon.setVisibility(View.VISIBLE);
                 search.setVisibility(View.VISIBLE);
                 cancelBtn.setVisibility(View.GONE);
                 searchBar.setVisibility(View.GONE);
@@ -272,78 +272,78 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //profil animations
-    public void profilAnim (){
-
-        profil.setOnClickListener(new View.OnClickListener() {
-            boolean clicked = false;
-            @Override
-            public void onClick(View v) {
-                if(!clicked){
-                    animSettingsIN ();
-                    animInfoIN ();
-                    animLogoutIN ();
-                    clicked = true;
-                }else {
-                    animSettingsOUT ();
-                    animInfoOUT ();
-                    animLogoutOUT ();
-                    clicked = false;
-                }
-
-            }
-        });
-
-    }
-    public void animSettingsIN (){
-        Animation animation = new TranslateAnimation(0, 100,0, 0);
-        animation.setDuration(300);
-        animation.setFillAfter(true);
-        settings.startAnimation(animation);
-        settings.setVisibility( View.VISIBLE );
-    }
-    public void animInfoIN (){
-
-        Animation animation = new TranslateAnimation(0, 170,0, 0);
-        animation.setDuration(300);
-        animation.setFillAfter(true);
-        info.startAnimation(animation);
-        info.setVisibility( View.VISIBLE );
-
-    }
-    public void animLogoutIN (){
-        Animation animation = new TranslateAnimation(0, 240,0, 0);
-        animation.setDuration(300);
-        animation.setFillAfter(true);
-        logout.startAnimation(animation);
-        logout.setVisibility( View.VISIBLE );
-
-    }
-    public void animSettingsOUT (){
-
-        Animation animation = new TranslateAnimation(100, 0,0, 0);
-        animation.setDuration(300);
-        animation.setFillAfter(true);
-        settings.startAnimation(animation);
-        settings.setVisibility( View.VISIBLE );
-    }
-    public void animInfoOUT (){
-
-        Animation animation = new TranslateAnimation(170, 0,0, 0);
-        animation.setDuration(300);
-        animation.setFillAfter(true);
-        info.startAnimation(animation);
-        info.setVisibility( View.VISIBLE );
-
-    }
-    public void animLogoutOUT (){
-
-        Animation animation = new TranslateAnimation(240, 0,0, 0);
-        animation.setDuration(300);
-        animation.setFillAfter(true);
-        logout.startAnimation(animation);
-        logout.setVisibility( View.VISIBLE );
-
-    }
+//    public void profilAnim (){
+//
+//        profil.setOnClickListener(new View.OnClickListener() {
+//            boolean clicked = false;
+//            @Override
+//            public void onClick(View v) {
+//                if(!clicked){
+//                    animSettingsIN ();
+//                    animInfoIN ();
+//                    animLogoutIN ();
+//                    clicked = true;
+//                }else {
+//                    animSettingsOUT ();
+//                    animInfoOUT ();
+//                    animLogoutOUT ();
+//                    clicked = false;
+//                }
+//
+//            }
+//        });
+//
+//    }
+//    public void animSettingsIN (){
+//        Animation animation = new TranslateAnimation(0, 100,0, 0);
+//        animation.setDuration(300);
+//        animation.setFillAfter(true);
+//        settings.startAnimation(animation);
+//        settings.setVisibility( View.VISIBLE );
+//    }
+//    public void animInfoIN (){
+//
+//        Animation animation = new TranslateAnimation(0, 170,0, 0);
+//        animation.setDuration(300);
+//        animation.setFillAfter(true);
+//        info.startAnimation(animation);
+//        info.setVisibility( View.VISIBLE );
+//
+//    }
+//    public void animLogoutIN (){
+//        Animation animation = new TranslateAnimation(0, 240,0, 0);
+//        animation.setDuration(300);
+//        animation.setFillAfter(true);
+//        logout.startAnimation(animation);
+//        logout.setVisibility( View.VISIBLE );
+//
+//    }
+//    public void animSettingsOUT (){
+//
+//        Animation animation = new TranslateAnimation(100, 0,0, 0);
+//        animation.setDuration(300);
+//        animation.setFillAfter(true);
+//        settings.startAnimation(animation);
+//        settings.setVisibility( View.VISIBLE );
+//    }
+//    public void animInfoOUT (){
+//
+//        Animation animation = new TranslateAnimation(170, 0,0, 0);
+//        animation.setDuration(300);
+//        animation.setFillAfter(true);
+//        info.startAnimation(animation);
+//        info.setVisibility( View.VISIBLE );
+//
+//    }
+//    public void animLogoutOUT (){
+//
+//        Animation animation = new TranslateAnimation(240, 0,0, 0);
+//        animation.setDuration(300);
+//        animation.setFillAfter(true);
+//        logout.startAnimation(animation);
+//        logout.setVisibility( View.VISIBLE );
+//
+//    }
 
     public void animSearchAppaire (EditText searchbar, ConstraintLayout topAppBar) {
         Animation animation = new TranslateAnimation( topAppBar.getWidth() +80, 0,0, 0);
@@ -386,10 +386,10 @@ public class MainActivity extends AppCompatActivity {
     private void findViews(){
           btmNavView =(BottomNavigationView) findViewById(R.id.bottomNavigationView);
           fab = (FloatingActionButton) findViewById(R.id.fab);
-          profil= (ImageButton) findViewById(R.id.user);
-          settings =(ImageButton) findViewById(R.id.settings);
+//          profil= (ImageButton) findViewById(R.id.user);
+//          settings =(ImageButton) findViewById(R.id.settings);
          info =(ImageButton) findViewById(R.id.info);
-         logout= (ImageButton) findViewById(R.id.logout);
+//         logout= (ImageButton) findViewById(R.id.logout);
          appBar =(AppBarLayout) findViewById(R.id.appBar);
         searchBar = (EditText) findViewById(R.id.editText_search);
     }

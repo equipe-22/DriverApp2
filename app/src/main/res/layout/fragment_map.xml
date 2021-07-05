@@ -14,20 +14,4 @@
         android:layout_height="match_parent"
         tools:context=".Fragments.MapFragment" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/clearMarkers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:backgroundTint="@color/white"
-        android:elevation="10dp"
-        app:fabSize="mini"
-        android:scaleType="center"
-        android:src="@drawable/ic_map"
-        app:borderWidth="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/dark_grey" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

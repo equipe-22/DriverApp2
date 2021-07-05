@@ -33,7 +33,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapFragment extends Fragment {
 
-    ImageButton btnClrMarkers;
     private GoogleMap mMap;
     private Geocoder geocoder;
     private int ACCESS_LOCATION_REQUEST_CODE = 10001;
@@ -66,18 +65,8 @@ public class MapFragment extends Fragment {
              */
             mMap = googleMap;
             addCurrentTrackedCarMarker(googleMap);
-            clearPreviousMarkers(googleMap);
         }
 
-        public void clearPreviousMarkers(GoogleMap googleMap){
-            btnClrMarkers.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    googleMap.clear();
-                    addCurrentTrackedCarMarker(googleMap);
-                }
-            });
-        }
         public void addCurrentTrackedCarMarker(GoogleMap googleMap){
             if (MainActivity.currTrackedCar != null) {
                 if (MainActivity.currTrackedCar.getLastLocationLat() != null && MainActivity.currTrackedCar.getLastLocationLng() != null) {
@@ -97,7 +86,6 @@ public class MapFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_map, container, false);
-        btnClrMarkers = v.findViewById(R.id.clearMarkers);
 
         return v;
     }
